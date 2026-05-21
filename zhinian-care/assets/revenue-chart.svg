@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f2a1e"/>
+      <stop offset="100%" stop-color="#1b4332"/>
+    </linearGradient>
+    <linearGradient id="barG" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0%" stop-color="#2d6a4f"/>
+      <stop offset="100%" stop-color="#52b788"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="400" fill="url(#bg)"/>
+
+  <!-- Title -->
+  <text x="40" y="45" font-family="'PingFang SC','Microsoft YaHei',sans-serif" font-size="16" font-weight="600" fill="#d8f3dc" letter-spacing="2">Five-Year Revenue Projection</text>
+  <text x="40" y="68" font-family="'PingFang SC','Microsoft YaHei',sans-serif" font-size="11" fill="#2d6a4f">CNY (Thousands)</text>
+
+  <!-- Y-axis labels -->
+  <g font-family="monospace" font-size="10" fill="#2d6a4f">
+    <text x="50" y="355">0</text>
+    <text x="42" y="285">2K</text>
+    <text x="42" y="215">4K</text>
+    <text x="42" y="145">6K</text>
+    <text x="42" y="75">8K</text>
+  </g>
+
+  <!-- Grid lines -->
+  <g stroke="#1b4332" stroke-width="0.5">
+    <line x1="80" y1="350" x2="560" y2="350"/>
+    <line x1="80" y1="280" x2="560" y2="280"/>
+    <line x1="80" y1="210" x2="560" y2="210"/>
+    <line x1="80" y1="140" x2="560" y2="140"/>
+    <line x1="80" y1="70" x2="560" y2="70"/>
+  </g>
+
+  <!-- X-axis labels -->
+  <g font-family="'PingFang SC',sans-serif" font-size="11" fill="#2d6a4f" text-anchor="middle">
+    <text x="128" y="380">2026</text>
+    <text x="224" y="380">2027</text>
+    <text x="320" y="380">2028</text>
+    <text x="416" y="380">2029</text>
+    <text x="512" y="380">2030</text>
+  </g>
+
+  <!-- Bars -->
+  <g>
+    <!-- 2026: 225K -->
+    <rect x="96" y="320" width="64" height="30" rx="3" fill="url(#barG)" opacity="0.8">
+      <animate attributeName="height" from="0" to="30" dur="0.8s" fill="freeze"/>
+      <animate attributeName="y" from="350" to="320" dur="0.8s" fill="freeze"/>
+    </rect>
+    <text x="128" y="312" font-family="monospace" font-size="10" fill="#52b788" text-anchor="middle">225</text>
+
+    <!-- 2027: 750K -->
+    <rect x="192" y="260" width="64" height="90" rx="3" fill="url(#barG)" opacity="0.8">
+      <animate attributeName="height" from="0" to="90" dur="1s" begin="0.3s" fill="freeze"/>
+      <animate attributeName="y" from="350" to="260" dur="1s" begin="0.3s" fill="freeze"/>
+    </rect>
+    <text x="224" y="252" font-family="monospace" font-size="10" fill="#52b788" text-anchor="middle">750</text>
+
+    <!-- 2028: 2,400K -->
+    <rect x="288" y="140" width="64" height="210" rx="3" fill="url(#barG)" opacity="0.85">
+      <animate attributeName="height" from="0" to="210" dur="1.2s" begin="0.6s" fill="freeze"/>
+      <animate attributeName="y" from="350" to="140" dur="1.2s" begin="0.6s" fill="freeze"/>
+    </rect>
+    <text x="320" y="132" font-family="monospace" font-size="10" fill="#52b788" text-anchor="middle">2,400</text>
+
+    <!-- 2029: 4,320K -->
+    <rect x="384" y="70" width="64" height="280" rx="3" fill="url(#barG)" opacity="0.9">
+      <animate attributeName="height" from="0" to="280" dur="1.4s" begin="0.9s" fill="freeze"/>
+      <animate attributeName="y" from="350" to="70" dur="1.4s" begin="0.9s" fill="freeze"/>
+    </rect>
+    <text x="416" y="62" font-family="monospace" font-size="10" fill="#52b788" text-anchor="middle">4,320</text>
+
+    <!-- 2030: 7,776K -->
+    <rect x="480" y="20" width="64" height="330" rx="3" fill="url(#barG)" opacity="1">
+      <animate attributeName="height" from="0" to="330" dur="1.6s" begin="1.2s" fill="freeze"/>
+      <animate attributeName="y" from="350" to="20" dur="1.6s" begin="1.2s" fill="freeze"/>
+    </rect>
+    <text x="512" y="12" font-family="monospace" font-size="10" fill="#95d5b2" text-anchor="middle">7,776</text>
+  </g>
+
+  <!-- Growth curve line overlay -->
+  <polyline points="128,320 224,260 320,140 416,70 512,20" stroke="#95d5b2" stroke-width="2" fill="none" opacity="0.5" stroke-dasharray="6 3">
+    <animate attributeName="opacity" values="0;0.5" dur="2s" begin="2.5s" fill="freeze"/>
+  </polyline>
+
+  <!-- CAGR annotation -->
+  <text x="480" y="105" font-family="monospace" font-size="10" fill="#95d5b2" opacity="0">CAGR 103%
+    <animate attributeName="opacity" values="0;0.7" dur="1s" begin="3s" fill="freeze"/>
+  </text>
+  <path d="M480 110 L512 110" stroke="#95d5b2" stroke-width="1" opacity="0">
+    <animate attributeName="opacity" values="0;0.5" dur="1s" begin="3s" fill="freeze"/>
+  </path>
+</svg>

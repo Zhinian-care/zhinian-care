@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zhinian Care — 一天 · 给父母一个更安全的家</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background: #0f2a1e;
+            color: #d4e8d4;
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* ─── Scrollbar ─── */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #0f2a1e; }
+        ::-webkit-scrollbar-thumb { background: #2d6a4f; border-radius: 3px; }
+
+        /* ─── Navigation ─── */
+        nav {
+            position: fixed; top: 0; left: 0; width: 100%;
+            background: rgba(15, 42, 30, 0.92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(45, 106, 79, 0.3);
+            z-index: 1000;
+            padding: 0 40px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        nav .logo {
+            font-size: 20px; font-weight: 700;
+            color: #95d5b2;
+            letter-spacing: 1px;
+        }
+        nav .logo span { color: #d8f3dc; }
+        nav .nav-links { display: flex; gap: 8px; flex-wrap: wrap; }
+        nav .nav-links a {
+            color: #b7e4c7; text-decoration: none; font-size: 13px;
+            padding: 6px 14px; border-radius: 20px;
+            transition: all 0.3s;
+        }
+        nav .nav-links a:hover { background: #2d6a4f; color: #fff; }
+        .hamburger { display: none; flex-direction: column; cursor: pointer; gap: 5px; }
+        .hamburger span { width: 26px; height: 2px; background: #95d5b2; border-radius: 2px; }
+
+        /* ─── SVG backgrounds ─── */
+        .svg-bg {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            object-fit: cover; pointer-events: none; z-index: 0;
+        }
+        .svg-bg.hero-svg { opacity: 0.35; }
+        .svg-section { width: 100%; max-width: 100%; margin: 0 auto; display: block; }
+        .svg-section.small { max-width: 700px; }
+        .svg-section.medium { max-width: 900px; }
+
+        /* ─── Hero ─── */
+        .hero {
+            min-height: 100vh;
+            display: flex; align-items: center; justify-content: center;
+            text-align: center;
+            padding: 120px 40px 80px;
+            background: linear-gradient(135deg, #0a1f15 0%, #1b4332 40%, #2d6a4f 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(ellipse at 30% 50%, rgba(69, 160, 109, 0.08), transparent 60%);
+            pointer-events: none;
+            z-index: 1;
+        }
+        .hero-content { position: relative; z-index: 2; max-width: 800px; }
+        .hero-content .tagline {
+            font-size: 14px;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            color: #95d5b2;
+            margin-bottom: 24px;
+            font-weight: 300;
+        }
+        .hero-content h1 {
+            font-size: clamp(36px, 6vw, 64px);
+            font-weight: 300;
+            color: #fff;
+            line-height: 1.2;
+            margin-bottom: 12px;
+        }
+        .hero-content h1 strong { font-weight: 600; color: #95d5b2; }
+        .hero-content .sub {
+            font-size: clamp(16px, 2vw, 22px);
+            color: #b7e4c7;
+            margin-bottom: 40px;
+            font-weight: 300;
+        }
+        .hero-content .cta-group { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+        .btn-primary {
+            display: inline-block;
+            padding: 14px 40px;
+            background: #52b788;
+            color: #0f2a1e;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 40px;
+            text-decoration: none;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        .btn-primary:hover { background: #74c69d; transform: translateY(-2px); box-shadow: 0 8px 30px rgba(82, 183, 136, 0.3); }
+        .btn-outline {
+            display: inline-block;
+            padding: 14px 40px;
+            background: transparent;
+            color: #95d5b2;
+            font-size: 16px;
+            font-weight: 500;
+            border-radius: 40px;
+            border: 1px solid #2d6a4f;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        .btn-outline:hover { border-color: #52b788; color: #52b788; background: rgba(82, 183, 136, 0.08); }
+
+        .scroll-indicator {
+            position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
+            display: flex; flex-direction: column; align-items: center; gap: 8px;
+            color: #2d6a4f; font-size: 12px; letter-spacing: 2px;
+            z-index: 3;
+            animation: float 2s ease-in-out infinite;
+        }
+        .scroll-indicator .arrow { width: 20px; height: 20px; border-right: 1px solid #2d6a4f; border-bottom: 1px solid #2d6a4f; transform: rotate(45deg); }
+        @keyframes float { 0%,100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(8px); } }
+
+        /* ─── Sections ─── */
+        section { padding: 100px 40px; max-width: 1200px; margin: 0 auto; }
+        .section-label {
+            font-size: 11px; letter-spacing: 4px; text-transform: uppercase;
+            color: #52b788; margin-bottom: 8px; font-weight: 400;
+        }
+        .section-title {
+            font-size: clamp(28px, 4vw, 40px);
+            font-weight: 300;
+            color: #fff;
+            margin-bottom: 16px;
+        }
+        .section-title strong { font-weight: 600; color: #95d5b2; }
+        .section-sub {
+            font-size: 16px; color: #a3c4b3;
+            max-width: 640px; margin-bottom: 48px;
+        }
+
+        /* ─── About / Description ─── */
+        .desc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+        .desc-grid .text-col p { margin-bottom: 20px; color: #c5dcd0; font-size: 15px; }
+        .desc-grid .stat-col { display: flex; flex-direction: column; gap: 24px; }
+        .stat-card {
+            background: rgba(45, 106, 79, 0.15);
+            border: 1px solid rgba(45, 106, 79, 0.3);
+            border-radius: 16px;
+            padding: 28px 32px;
+            transition: all 0.3s;
+        }
+        .stat-card:hover { background: rgba(45, 106, 79, 0.25); border-color: #52b788; }
+        .stat-card .num { font-size: 32px; font-weight: 700; color: #95d5b2; }
+        .stat-card .label { font-size: 13px; color: #a3c4b3; margin-top: 4px; }
+
+        /* ─── Competitive Advantage ─── */
+        .advantage-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+        .advantage-card {
+            background: rgba(45, 106, 79, 0.1);
+            border: 1px solid rgba(45, 106, 79, 0.2);
+            border-radius: 20px;
+            padding: 36px 28px;
+            text-align: center;
+            transition: all 0.4s;
+        }
+        .advantage-card:hover { background: rgba(45, 106, 79, 0.2); transform: translateY(-4px); }
+        .advantage-card .icon { font-size: 40px; margin-bottom: 16px; }
+        .advantage-card h3 { font-size: 20px; font-weight: 600; color: #fff; margin-bottom: 10px; }
+        .advantage-card p { font-size: 14px; color: #a3c4b3; }
+
+        /* ─── Packages ─── */
+        .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+        .pricing-card {
+            background: rgba(45, 106, 79, 0.1);
+            border: 1px solid rgba(45, 106, 79, 0.25);
+            border-radius: 20px;
+            padding: 40px 28px;
+            transition: all 0.4s;
+            display: flex; flex-direction: column;
+        }
+        .pricing-card.featured {
+            border-color: #52b788;
+            background: rgba(82, 183, 136, 0.08);
+            transform: scale(1.03);
+        }
+        .pricing-card:hover { border-color: #52b788; }
+        .pricing-card .plan-name { font-size: 14px; letter-spacing: 3px; text-transform: uppercase; color: #52b788; margin-bottom: 8px; }
+        .pricing-card .price { font-size: 36px; font-weight: 300; color: #fff; margin-bottom: 4px; }
+        .pricing-card .price span { font-size: 16px; color: #a3c4b3; }
+        .pricing-card .desc { font-size: 14px; color: #a3c4b3; margin-bottom: 24px; line-height: 1.6; }
+        .pricing-card ul { list-style: none; flex: 1; }
+        .pricing-card ul li { padding: 8px 0; font-size: 14px; color: #c5dcd0; border-top: 1px solid rgba(45, 106, 79, 0.2); }
+        .pricing-card ul li::before { content: '✓ '; color: #52b788; }
+        .pricing-card .btn-outline { margin-top: 24px; text-align: center; }
+
+        /* ─── How It Works ─── */
+        .steps { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; }
+        .step {
+            text-align: center;
+            padding: 24px 12px;
+            background: rgba(45, 106, 79, 0.08);
+            border-radius: 16px;
+            border: 1px solid rgba(45, 106, 79, 0.15);
+        }
+        .step .step-num {
+            width: 36px; height: 36px; border-radius: 50%;
+            background: #2d6a4f; color: #fff;
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 12px; font-size: 14px; font-weight: 700;
+        }
+        .step h4 { font-size: 15px; color: #fff; margin-bottom: 6px; }
+        .step p { font-size: 12px; color: #a3c4b3; }
+
+        /* ─── Market / Stats ─── */
+        .market-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+        .market-grid table { width: 100%; border-collapse: collapse; }
+        .market-grid th, .market-grid td {
+            text-align: left; padding: 12px 0;
+            border-bottom: 1px solid rgba(45, 106, 79, 0.2);
+            font-size: 14px;
+        }
+        .market-grid th { color: #52b788; font-weight: 500; }
+        .market-grid td { color: #c5dcd0; }
+
+        /* ─── Financial Summary ─── */
+        .fin-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+        .fin-card {
+            background: rgba(45, 106, 79, 0.12);
+            border: 1px solid rgba(45, 106, 79, 0.2);
+            border-radius: 16px;
+            padding: 24px;
+            text-align: center;
+        }
+        .fin-card .fin-year { font-size: 13px; color: #52b788; letter-spacing: 2px; margin-bottom: 8px; }
+        .fin-card .fin-rev { font-size: 24px; font-weight: 600; color: #fff; }
+        .fin-card .fin-rev span { font-size: 12px; color: #a3c4b3; font-weight: 400; }
+        .fin-card .fin-margin { font-size: 14px; color: #95d5b2; margin-top: 6px; }
+
+        .fin-table-wrap { margin-top: 40px; overflow-x: auto; }
+        .fin-table-wrap table { width: 100%; border-collapse: collapse; min-width: 600px; }
+        .fin-table-wrap th {
+            text-align: left; padding: 12px 16px;
+            font-size: 13px; color: #52b788; font-weight: 500;
+            border-bottom: 1px solid #2d6a4f;
+        }
+        .fin-table-wrap td {
+            padding: 12px 16px; font-size: 13px; color: #c5dcd0;
+            border-bottom: 1px solid rgba(45, 106, 79, 0.15);
+        }
+        .fin-table-wrap tr:last-child td { border-bottom: none; font-weight: 600; color: #95d5b2; }
+
+        /* ─── Team ─── */
+        .team-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px; }
+        .team-card {
+            background: rgba(45, 106, 79, 0.08);
+            border: 1px solid rgba(45, 106, 79, 0.15);
+            border-radius: 16px;
+            padding: 28px 16px;
+            text-align: center;
+        }
+        .team-card .avatar {
+            width: 64px; height: 64px; border-radius: 50%;
+            background: linear-gradient(135deg, #2d6a4f, #52b788);
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 12px;
+            font-size: 22px; font-weight: 700; color: #fff;
+        }
+        .team-card h4 { font-size: 15px; color: #fff; margin-bottom: 2px; }
+        .team-card .eng { font-size: 12px; color: #95d5b2; margin-bottom: 4px; }
+        .team-card .role { font-size: 12px; color: #a3c4b3; }
+
+        /* ─── Contact / Footer ─── */
+        .contact-section { background: #0a1f15; padding: 80px 40px; max-width: 100%; }
+        .contact-section .inner { max-width: 1200px; margin: 0 auto; text-align: center; }
+        .contact-section h2 { font-weight: 300; margin-bottom: 12px; }
+        .contact-section p { color: #a3c4b3; margin-bottom: 40px; }
+
+        footer {
+            background: #071710;
+            padding: 40px;
+            text-align: center;
+            border-top: 1px solid rgba(45, 106, 79, 0.15);
+        }
+        footer p { font-size: 13px; color: #2d6a4f; }
+        footer .footer-logos { display: flex; justify-content: center; gap: 40px; margin-bottom: 16px; flex-wrap: wrap; }
+        footer .footer-logos span { color: #a3c4b3; font-size: 13px; }
+
+        /* ─── Responsive ─── */
+        @media (max-width: 900px) {
+            .desc-grid, .market-grid { grid-template-columns: 1fr; gap: 30px; }
+            .advantage-grid, .pricing-grid, .fin-grid { grid-template-columns: 1fr 1fr; }
+            .steps { grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+            .team-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+        @media (max-width: 640px) {
+            nav { padding: 0 20px; }
+            nav .nav-links { display: none; }
+            .hamburger { display: flex; }
+            section { padding: 60px 20px; }
+            .hero { padding: 100px 20px 60px; }
+            .advantage-grid, .pricing-grid, .fin-grid { grid-template-columns: 1fr; }
+            .steps { grid-template-columns: 1fr 1fr; }
+            .team-grid { grid-template-columns: 1fr 1fr; }
+            .pricing-card.featured { transform: none; }
+        }
+
+        /* ─── Animations ─── */
+        .fade-in { opacity: 0; transform: translateY(30px); transition: all 0.8s ease; }
+        .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+        /* ─── SWOT ─── */
+        .swot-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .swot-card { padding: 24px; border-radius: 16px; }
+        .swot-card h4 { font-size: 14px; letter-spacing: 3px; margin-bottom: 12px; }
+        .swot-card ul { list-style: none; }
+        .swot-card ul li { font-size: 13px; padding: 4px 0; color: #c5dcd0; }
+        .swot-s { background: rgba(82, 183, 136, 0.12); border: 1px solid rgba(82, 183, 136, 0.2); }
+        .swot-s h4 { color: #52b788; }
+        .swot-w { background: rgba(204, 119, 34, 0.1); border: 1px solid rgba(204, 119, 34, 0.2); }
+        .swot-w h4 { color: #cc7722; }
+        .swot-o { background: rgba(69, 160, 109, 0.1); border: 1px solid rgba(69, 160, 109, 0.2); }
+        .swot-o h4 { color: #69c490; }
+        .swot-t { background: rgba(180, 60, 60, 0.1); border: 1px solid rgba(180, 60, 60, 0.2); }
+        .swot-t h4 { color: #b44c4c; }
+    </style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav>
+    <div class="logo"><span>Zhinian</span> Care</div>
+    <div class="nav-links">
+        <a href="#about">About</a>
+        <a href="#advantage">Why Us</a>
+        <a href="#packages">Packages</a>
+        <a href="#process">Process</a>
+        <a href="#market">Market</a>
+        <a href="#finance">Finance</a>
+        <a href="#team">Team</a>
+        <a href="#contact">Contact</a>
+    </div>
+    <div class="hamburger" onclick="document.querySelector('.nav-links').style.display=document.querySelector('.nav-links').style.display==='flex'?'none':'flex';document.querySelector('.nav-links').style.flexDirection='column';document.querySelector('.nav-links').style.position='absolute';document.querySelector('.nav-links').style.top='64px';document.querySelector('.nav-links').style.left='0';document.querySelector('.nav-links').style.width='100%';document.querySelector('.nav-links').style.background='rgba(15,42,30,0.98)';document.querySelector('.nav-links').style.padding='20px';document.querySelector('.nav-links').style.alignItems='center'">
+        <span></span><span></span><span></span>
+    </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero" id="home">
+    <object class="svg-bg hero-svg" type="image/svg+xml" data="assets/hero-animation.svg">Hero Animation</object>
+    <div class="hero-content">
+        <div class="tagline">One Day. A Safer Home for Your Parents.</div>
+        <h1>让老房子 <strong>更安心</strong><br>只需 <strong>一天</strong></h1>
+        <p class="sub">无需装修许可 · 无需结构改造 · 不打扰父母日常生活</p>
+        <div class="cta-group">
+            <a href="#packages" class="btn-primary">查看方案</a>
+            <a href="#contact" class="btn-outline">预约免费评估</a>
+        </div>
+    </div>
+    <div class="scroll-indicator">
+        <span>Scroll</span>
+        <div class="arrow"></div>
+    </div>
+</section>
+
+<!-- About -->
+<section id="about">
+    <div class="section-label">About</div>
+    <h2 class="section-title">关于 <strong>至念 Care</strong></h2>
+    <div class="desc-grid fade-in">
+        <div class="text-col">
+            <p>至念 Care 是一家专注于居家适老化安全改造的社会企业，总部位于广东省珠海市香洲区。我们提供<a style="color:#52b788;text-decoration:none;border-bottom:1px solid #2d6a4f">一天完工、无需大修</a>的居家安全改造服务，专为希望在家中安度晚年的长者设计。</p>
+            <p>服务范围涵盖扶手安装、浴室防滑处理、感应夜灯、无线开关、SOS 紧急呼叫装置及智能跌倒监测设备。所有的改造均为<b style="color:#d8f3dc">软装安全升级</b>，无需结构改造或施工许可，一个工作日即可完成。</p>
+            <p>试点运营计划于 <b style="color:#95d5b2">2026 年第三季度</b>启动。</p>
+        </div>
+        <div class="stat-col">
+            <div class="stat-card">
+                <div class="num">~30,000</div>
+                <div class="label">香洲区目标适老改造家庭（预估）</div>
+            </div>
+            <div class="stat-card">
+                <div class="num">50</div>
+                <div class="label">2026 年计划完成家庭数</div>
+            </div>
+            <div class="stat-card">
+                <div class="num">1,500</div>
+                <div class="label">五年累计目标家庭数（5% 渗透率）</div>
+            </div>
+            <div class="stat-card">
+                <div class="num">CNY 500,000</div>
+                <div class="label">创始启动资金</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Market Funnel SVG -->
+<div style="max-width:100%;padding:0 40px;margin-top:-40px">
+    <object class="svg-section small" type="image/svg+xml" data="assets/funnel-chart.svg">Market Funnel</object>
+</div>
+
+<!-- Competitive Advantage -->
+<section id="advantage">
+    <div class="section-label">Why Zhinian Care</div>
+    <h2 class="section-title">我们的 <strong>核心优势</strong></h2>
+    <p class="section-sub">至念 Care 的核心承诺简单明了：一天完工、无需大修、让子女安心。</p>
+    <div class="advantage-grid fade-in">
+        <div class="advantage-card">
+            <div class="icon">☀️</div>
+            <h3>一天完工</h3>
+            <p>所有安全升级在一个工作日内完成，无需漫长施工期，不打扰长者的日常生活节奏。</p>
+        </div>
+        <div class="advantage-card">
+            <div class="icon">🏠</div>
+            <h3>无需大修</h3>
+            <p>专注软装安全改造：扶手、防滑、感应灯、SOS 设备、智能监测。不涉及结构改造，无需施工许可，长者无需搬离。</p>
+        </div>
+        <div class="advantage-card">
+            <div class="icon">💚</div>
+            <h3>安心保障</h3>
+            <p>安装后交付「家庭安全档案」，可选年度安全巡检和智能监测订阅，将一次改造转化为长期关怀。</p>
+        </div>
+    </div>
+</section>
+
+<!-- Competitive Map SVG -->
+<div style="max-width:100%;padding:0 40px;background:rgba(45,106,79,0.03)">
+    <object class="svg-section medium" type="image/svg+xml" data="assets/competitive-map.svg">Competitive Map</object>
+</div>
+
+<!-- SWOT -->
+<section style="padding-top:0">
+    <div class="section-label">SWOT Analysis</div>
+    <h2 class="section-title">优势 · 劣势 · 机会 · <strong>挑战</strong></h2>
+    <div class="swot-grid fade-in">
+        <div class="swot-card swot-s">
+            <h4>✦ STRENGTHS</h4>
+            <ul>
+                <li>一站式评估-安装-售后闭环服务</li>
+                <li>社区社工渠道建立信任入口</li>
+                <li>轻资产模式：CNY 500K 启动</li>
+                <li>无需施工许可，一天交付</li>
+            </ul>
+        </div>
+        <div class="swot-card swot-w">
+            <h4>✦ WEAKNESSES</h4>
+            <ul>
+                <li>品牌知名度为零，需从零建立</li>
+                <li>依赖第三方安装团队</li>
+                <li>缺乏政府采购背书</li>
+                <li>初期客户获取成本较高</li>
+            </ul>
+        </div>
+        <div class="swot-card swot-o">
+            <h4>✦ OPPORTUNITIES</h4>
+            <ul>
+                <li>国家层面适老化改造政策持续利好</li>
+                <li>珠海市居家养老设施规划支持</li>
+                <li>子女消费升级，预防性安全投入增加</li>
+                <li>智能养老技术成熟（毫米波雷达等）</li>
+            </ul>
+        </div>
+        <div class="swot-card swot-t">
+            <h4>✦ THREATS</h4>
+            <ul>
+                <li>大型平台（如福寿康、安康通）进入本地</li>
+                <li>电商 DIY 产品低价竞争</li>
+                <li>政府补贴项目可能降低付费意愿</li>
+                <li>O2O 平台流量挤压</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<!-- Process SVG Full Width -->
+<div style="max-width:100%;padding:40px 40px 0;background:rgba(45,106,79,0.03)">
+    <object class="svg-section" type="image/svg+xml" data="assets/process-flow.svg">Service Process</object>
+</div>
+
+<!-- Packages -->
+<section id="packages">
+    <div class="section-label">Packages</div>
+    <h2 class="section-title">服务 <strong>方案</strong></h2>
+    <p class="section-sub">三个套餐覆盖不同需求。所有套餐价格比单独购买低 15–20%。免费上门安全评估，无需购买义务。</p>
+    <div class="pricing-grid fade-in">
+        <div class="pricing-card">
+            <div class="plan-name">Basic</div>
+            <div class="price">CNY 800<span>–1,500</span></div>
+            <div class="desc">基础防跌倒包</div>
+            <ul>
+                <li>防滑垫 + 扶手</li>
+                <li>感应夜灯</li>
+                <li>防撞角</li>
+                <li>烟雾报警器</li>
+                <li>基础安全档案</li>
+            </ul>
+            <a href="#contact" class="btn-outline">了解详情</a>
+        </div>
+        <div class="pricing-card featured">
+            <div class="plan-name">Whole-Home</div>
+            <div class="price">CNY 2,500<span>–4,000</span></div>
+            <div class="desc">全屋安心套餐</div>
+            <ul>
+                <li>基础包所有内容</li>
+                <li>全屋插座改造</li>
+                <li>走廊扶手</li>
+                <li>SOS 紧急按钮</li>
+                <li>智能门锁</li>
+                <li>标准安全档案</li>
+            </ul>
+            <a href="#contact" class="btn-outline">热门方案</a>
+        </div>
+        <div class="pricing-card">
+            <div class="plan-name">Smart Care</div>
+            <div class="price">CNY 4,500<span>–7,000</span></div>
+            <div class="desc">智能看护套装</div>
+            <ul>
+                <li>全屋包所有内容</li>
+                <li>雷达跌倒探测器</li>
+                <li>睡眠监测垫</li>
+                <li>智能药盒</li>
+                <li>高级安全档案</li>
+            </ul>
+            <a href="#contact" class="btn-outline">了解详情</a>
+        </div>
+    </div>
+    <div style="margin-top:24px;display:flex;gap:40px;justify-content:center;flex-wrap:wrap;text-align:center">
+        <div><span style="color:#52b788;font-size:14px;font-weight:600">年度安全巡检</span><br><span style="color:#a3c4b3;font-size:13px">CNY 199–399 / 年</span></div>
+        <div><span style="color:#52b788;font-size:14px;font-weight:600">智能监测订阅</span><br><span style="color:#a3c4b3;font-size:13px">CNY 29–59 / 月</span></div>
+    </div>
+</section>
+
+<!-- Process -->
+<section id="process" style="background:rgba(45,106,79,0.05);max-width:100%;padding:100px 40px">
+    <div style="max-width:1200px;margin:0 auto">
+        <div class="section-label">How It Works</div>
+        <h2 class="section-title">服务 <strong>流程</strong></h2>
+        <p class="section-sub">从首次联系到长期关怀，五个步骤，简单透明。</p>
+        <div class="steps fade-in">
+            <div class="step">
+                <div class="step-num">1</div>
+                <h4>在线预约</h4>
+                <p>通过微信小程序或电话预约免费上门安全评估</p>
+            </div>
+            <div class="step">
+                <div class="step-num">2</div>
+                <h4>免费评估</h4>
+                <p>专业评估师上门，全面检查家中安全隐患</p>
+            </div>
+            <div class="step">
+                <div class="step-num">3</div>
+                <h4>方案确认</h4>
+                <p>提供定制改造方案与报价，子女在线确认</p>
+            </div>
+            <div class="step">
+                <div class="step-num">4</div>
+                <h4>一天安装</h4>
+                <p>专业团队上门，一个工作日内完成所有安装</p>
+            </div>
+            <div class="step">
+                <div class="step-num">5</div>
+                <h4>长期关怀</h4>
+                <p>交付安全档案，可选年度巡检与智能监测</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Market -->
+<section id="market">
+    <div class="section-label">Market Analysis</div>
+    <h2 class="section-title">市场 <strong>洞察</strong></h2>
+    <p class="section-sub">珠海香洲区拥有大量 2000 年前建成的老旧社区，适老化设施严重不足，市场需求明确且持续增长。</p>
+    <div class="market-grid fade-in">
+        <div>
+            <table>
+                <tr><th>指标</th><th>数据</th></tr>
+                <tr><td>珠海市常住人口</td><td>1,618,300</td></tr>
+                <tr><td>60 岁以上人口</td><td>241,800</td></tr>
+                <tr><td>香洲老年人口</td><td>114,473</td></tr>
+                <tr><td>香洲老旧社区总数</td><td>796</td></tr>
+                <tr><td>尚未改造社区</td><td>400+</td></tr>
+                <tr><td>2000 年前社区占比</td><td>84% (779/925)</td></tr>
+                <tr><td>目标家庭预估</td><td>~30,000 户</td></tr>
+            </table>
+        </div>
+        <div>
+            <h3 style="font-weight:400;color:#d8f3dc;margin-bottom:16px">市场渗透漏斗</h3>
+            <div style="background:rgba(45,106,79,0.1);border-radius:16px;padding:24px;border:1px solid rgba(45,106,79,0.2)">
+                <div style="margin-bottom:12px"><span style="color:#52b788;font-weight:600">香洲全部老年家庭</span><br><span style="font-size:24px;color:#fff">~114,000 户</span></div>
+                <div style="height:1px;background:rgba(45,106,79,0.3);margin:12px 0"></div>
+                <div style="margin-bottom:12px"><span style="color:#52b788;font-weight:600">居住在 2000 年前旧社区</span><br><span style="font-size:24px;color:#fff">~60,000 户</span></div>
+                <div style="height:1px;background:rgba(45,106,79,0.3);margin:12px 0"></div>
+                <div style="margin-bottom:12px"><span style="color:#52b788;font-weight:600">有改造需求且有意愿</span><br><span style="font-size:24px;color:#fff">~30,000 户</span></div>
+                <div style="height:1px;background:rgba(45,106,79,0.3);margin:12px 0"></div>
+                <div><span style="color:#95d5b2;font-weight:600">5 年目标（5% 渗透）</span><br><span style="font-size:28px;color:#95d5b2">1,500 户</span></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Revenue Chart SVG -->
+<div style="max-width:100%;padding:0 40px">
+    <object class="svg-section small" type="image/svg+xml" data="assets/revenue-chart.svg">Revenue Chart</object>
+</div>
+
+<!-- Finance -->
+<section id="finance" style="background:rgba(45,106,79,0.05);max-width:100%;padding:100px 40px">
+    <div style="max-width:1200px;margin:0 auto">
+        <div class="section-label">Financial Plan</div>
+        <h2 class="section-title">五年 <strong>财务规划</strong></h2>
+        <p class="section-sub">预计第二年实现运营盈亏平衡，第五年净利润率达 36.1%。总投资 CNY 500,000，预计第三年初回本。</p>
+
+        <div class="fin-grid fade-in">
+            <div class="fin-card"><div class="fin-year">2026</div><div class="fin-rev">CNY 225K <span>营收</span></div><div class="fin-margin">净利率 -3.0%</div></div>
+            <div class="fin-card"><div class="fin-year">2027</div><div class="fin-rev">CNY 750K <span>营收</span></div><div class="fin-margin">净利率 16.7%</div></div>
+            <div class="fin-card"><div class="fin-year">2028</div><div class="fin-rev">CNY 2,400K <span>营收</span></div><div class="fin-margin">净利率 25.2%</div></div>
+            <div class="fin-card"><div class="fin-year">2030</div><div class="fin-rev">CNY 7,776K <span>营收</span></div><div class="fin-margin">净利率 36.1%</div></div>
+        </div>
+
+        <div class="fin-table-wrap fade-in">
+            <table>
+                <tr>
+                    <th>项目（CNY '000）</th><th>2026</th><th>2027</th><th>2028</th><th>2029</th><th>2030</th>
+                </tr>
+                <tr><td>营业收入</td><td>225.0</td><td>750.0</td><td>2,400.0</td><td>4,320.0</td><td>7,776.0</td></tr>
+                <tr><td>销售成本</td><td>(96.8)</td><td>(300.0)</td><td>(888.0)</td><td>(1,468.8)</td><td>(2,410.6)</td></tr>
+                <tr><td>毛利润</td><td>128.3</td><td>450.0</td><td>1,512.0</td><td>2,851.2</td><td>5,365.4</td></tr>
+                <tr><td>毛利率</td><td>57.0%</td><td>60.0%</td><td>63.0%</td><td>66.0%</td><td>69.0%</td></tr>
+                <tr><td>运营费用</td><td>(135.0)</td><td>(283.0)</td><td>(704.1)</td><td>(1,080.3)</td><td>(1,618.6)</td></tr>
+                <tr><td>税前利润</td><td>(6.8)</td><td>167.0</td><td>807.9</td><td>1,770.9</td><td>3,746.8</td></tr>
+                <tr><td>所得税 (25%)</td><td>0</td><td>(41.8)</td><td>(202.0)</td><td>(442.7)</td><td>(936.7)</td></tr>
+                <tr><td>净利润</td><td>(6.8)</td><td>125.2</td><td>605.9</td><td>1,328.2</td><td>2,810.1</td></tr>
+            </table>
+        </div>
+
+        </div>
+
+        <!-- Net Margin Trend SVG -->
+        <div style="max-width:100%;margin:40px auto 0">
+            <object class="svg-section small" type="image/svg+xml" data="assets/margin-chart.svg">Net Margin Trend</object>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:40px" class="fade-in">
+            <div style="background:rgba(45,106,79,0.1);border-radius:16px;padding:28px;border:1px solid rgba(45,106,79,0.2)">
+                <h4 style="color:#95d5b2;font-weight:500;margin-bottom:12px">盈亏平衡分析</h4>
+                <p style="font-size:14px;color:#c5dcd0">第二年运营费用 CNY 283,000，毛利率 60%。盈亏平衡销售额约 CNY 471,667，约 95 户即可平衡。2027 年目标 150 户（CNY 750,000），留足安全缓冲。</p>
+            </div>
+            <div style="background:rgba(45,106,79,0.1);border-radius:16px;padding:28px;border:1px solid rgba(45,106,79,0.2)">
+                <h4 style="color:#95d5b2;font-weight:500;margin-bottom:12px">投资回收期</h4>
+                <p style="font-size:14px;color:#c5dcd0">初始投入 CNY 500,000。第二年末现金余额 CNY 398,500，第三年初（2028 年）现金净流入 CNY 605,900，完成回收。预计 <b style="color:#95d5b2">2028 年初</b>实现回本。</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Team -->
+<section id="team">
+    <div class="section-label">Team</div>
+    <h2 class="section-title">我们的 <strong>团队</strong></h2>
+    <p class="section-sub">Instructor: Ms. Claudia Sau King Chow · BUS 1013 — Business, Entrepreneurship, and Innovation</p>
+    <div class="team-grid fade-in">
+        <div class="team-card">
+            <div class="avatar">徐</div>
+            <h4>胡馨月</h4>
+            <div class="eng">Sylvia</div>
+            <div class="role">Industry & Market Analysis</div>
+        </div>
+        <div class="team-card">
+            <div class="avatar">李</div>
+            <h4>李沛权</h4>
+            <div class="eng">Steven</div>
+            <div class="role">Business Description</div>
+        </div>
+        <div class="team-card">
+            <div class="avatar">吕</div>
+            <h4>吕谱弦</h4>
+            <div class="eng">Andrew</div>
+            <div class="role">Cover, Exec Summary,<br>Marketing, Operations</div>
+        </div>
+        <div class="team-card">
+            <div class="avatar">康</div>
+            <h4>康雅棋</h4>
+            <div class="eng">Grace</div>
+            <div class="role">Financial Plan,<br>Conclusion, References</div>
+        </div>
+        <div class="team-card">
+            <div class="avatar">胡</div>
+            <h4>胡家瑞</h4>
+            <div class="eng">Marco</div>
+            <div class="role">Competitive Analysis<br>SWOT</div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact -->
+<section class="contact-section" id="contact">
+    <div class="inner">
+        <div class="section-label">Get in Touch</div>
+        <h2 class="section-title">联系我们 · <strong>预约免费评估</strong></h2>
+        <p>珠海市香洲区 · 至念 Care<br>为父母预约一次免费居家安全评估，让爱提前一步。</p>
+        <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap">
+            <a href="#" class="btn-primary">微信预约</a>
+            <a href="#" class="btn-outline">电话咨询</a>
+        </div>
+        <p style="margin-top:40px;font-size:13px;color:#2d6a4f">One Day. A Safer Home for Your Parents.</p>
+    </div>
+</section>
+
+<footer>
+    <div class="footer-logos">
+        <span>Zhinian Care © 2026</span>
+        <span>珠海 · 香洲</span>
+        <span>BUS 1013 — 第二学期 2025/2026</span>
+    </div>
+    <p>Designed with care for every family.</p>
+</footer>
+
+<script>
+    // Intersection Observer for fade-in
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) entry.target.classList.add('visible');
+        });
+    }, { threshold: 0.15 });
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    // Smooth scroll for nav
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+        a.addEventListener('click', e => {
+            e.preventDefault();
+            const t = document.querySelector(a.getAttribute('href'));
+            if (t) t.scrollIntoView({ behavior: 'smooth' });
+        });
+    });
+</script>
+</body>
+</html>

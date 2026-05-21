@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zhinian Care — One Day. A Safer Home for Your Parents.</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background: #0f2a1e;
+            color: #d4e8d4;
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #0f2a1e; }
+        ::-webkit-scrollbar-thumb { background: #2d6a4f; border-radius: 3px; }
+
+        nav {
+            position: fixed; top: 0; left: 0; width: 100%;
+            background: rgba(15, 42, 30, 0.92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(45, 106, 79, 0.3);
+            z-index: 1000;
+            padding: 0 40px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        nav .logo { font-size: 20px; font-weight: 700; color: #95d5b2; letter-spacing: 1px; }
+        nav .logo span { color: #d8f3dc; }
+        nav .nav-links { display: flex; gap: 8px; flex-wrap: wrap; }
+        nav .nav-links a {
+            color: #b7e4c7; text-decoration: none; font-size: 13px;
+            padding: 6px 14px; border-radius: 20px; transition: all 0.3s;
+        }
+        nav .nav-links a:hover { background: #2d6a4f; color: #fff; }
+        .hamburger { display: none; flex-direction: column; cursor: pointer; gap: 5px; }
+        .hamburger span { width: 26px; height: 2px; background: #95d5b2; border-radius: 2px; }
+
+        .svg-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; pointer-events: none; z-index: 0; }
+        .svg-bg.hero-svg { opacity: 0.35; }
+        .svg-section { width: 100%; max-width: 100%; margin: 0 auto; display: block; }
+        .svg-section.small { max-width: 700px; }
+        .svg-section.medium { max-width: 900px; }
+
+        .hero {
+            min-height: 100vh;
+            display: flex; align-items: center; justify-content: center;
+            text-align: center;
+            padding: 120px 40px 80px;
+            background: linear-gradient(135deg, #0a1f15 0%, #1b4332 40%, #2d6a4f 100%);
+            position: relative; overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(ellipse at 30% 50%, rgba(69, 160, 109, 0.08), transparent 60%);
+            pointer-events: none; z-index: 1;
+        }
+        .hero-content { position: relative; z-index: 2; max-width: 800px; }
+        .hero-content .tagline {
+            font-size: 14px; letter-spacing: 6px; text-transform: uppercase;
+            color: #95d5b2; margin-bottom: 24px; font-weight: 300;
+        }
+        .hero-content h1 {
+            font-size: clamp(36px, 6vw, 64px); font-weight: 300;
+            color: #fff; line-height: 1.2; margin-bottom: 12px;
+        }
+        .hero-content h1 strong { font-weight: 600; color: #95d5b2; }
+        .hero-content .sub {
+            font-size: clamp(16px, 2vw, 22px); color: #b7e4c7;
+            margin-bottom: 40px; font-weight: 300;
+        }
+        .hero-content .cta-group { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+        .btn-primary {
+            display: inline-block; padding: 14px 40px;
+            background: #52b788; color: #0f2a1e;
+            font-size: 16px; font-weight: 600; border-radius: 40px;
+            text-decoration: none; transition: all 0.3s; border: none; cursor: pointer;
+        }
+        .btn-primary:hover { background: #74c69d; transform: translateY(-2px); box-shadow: 0 8px 30px rgba(82, 183, 136, 0.3); }
+        .btn-outline {
+            display: inline-block; padding: 14px 40px;
+            background: transparent; color: #95d5b2;
+            font-size: 16px; font-weight: 500; border-radius: 40px;
+            border: 1px solid #2d6a4f; text-decoration: none; transition: all 0.3s;
+        }
+        .btn-outline:hover { border-color: #52b788; color: #52b788; background: rgba(82, 183, 136, 0.08); }
+        .scroll-indicator {
+            position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
+            display: flex; flex-direction: column; align-items: center; gap: 8px;
+            color: #2d6a4f; font-size: 12px; letter-spacing: 2px;
+            z-index: 3; animation: float 2s ease-in-out infinite;
+        }
+        .scroll-indicator .arrow { width: 20px; height: 20px; border-right: 1px solid #2d6a4f; border-bottom: 1px solid #2d6a4f; transform: rotate(45deg); }
+        @keyframes float { 0%,100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(8px); } }
+
+        section { padding: 100px 40px; max-width: 1200px; margin: 0 auto; }
+        .section-label { font-size: 11px; letter-spacing: 4px; text-transform: uppercase; color: #52b788; margin-bottom: 8px; font-weight: 400; }
+        .section-title { font-size: clamp(28px, 4vw, 40px); font-weight: 300; color: #fff; margin-bottom: 16px; }
+        .section-title strong { font-weight: 600; color: #95d5b2; }
+        .section-sub { font-size: 16px; color: #a3c4b3; max-width: 640px; margin-bottom: 48px; }
+
+        .desc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+        .desc-grid .text-col p { margin-bottom: 20px; color: #c5dcd0; font-size: 15px; }
+        .desc-grid .stat-col { display: flex; flex-direction: column; gap: 24px; }
+        .stat-card { background: rgba(45, 106, 79, 0.15); border: 1px solid rgba(45, 106, 79, 0.3); border-radius: 16px; padding: 28px 32px; transition: all 0.3s; }
+        .stat-card:hover { background: rgba(45, 106, 79, 0.25); border-color: #52b788; }
+        .stat-card .num { font-size: 32px; font-weight: 700; color: #95d5b2; }
+        .stat-card .label { font-size: 13px; color: #a3c4b3; margin-top: 4px; }
+
+        .advantage-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+        .advantage-card {
+            background: rgba(45, 106, 79, 0.1); border: 1px solid rgba(45, 106, 79, 0.2);
+            border-radius: 20px; padding: 36px 24px; text-align: center; transition: all 0.4s;
+        }
+        .advantage-card:hover { background: rgba(45, 106, 79, 0.2); transform: translateY(-4px); }
+        .advantage-card .icon { font-size: 40px; margin-bottom: 16px; }
+        .advantage-card h3 { font-size: 18px; font-weight: 600; color: #fff; margin-bottom: 10px; }
+        .advantage-card p { font-size: 13px; color: #a3c4b3; }
+
+        .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+        .pricing-card {
+            background: rgba(45, 106, 79, 0.1); border: 1px solid rgba(45, 106, 79, 0.25);
+            border-radius: 20px; padding: 40px 28px; transition: all 0.4s ease; display: flex; flex-direction: column;
+            cursor: pointer;
+        }
+        .pricing-card.featured { border-color: #52b788; background: rgba(82, 183, 136, 0.08); }
+        .pricing-card:hover { border-color: #52b788; }
+        .pricing-card .plan-name { font-size: 14px; letter-spacing: 3px; text-transform: uppercase; color: #52b788; margin-bottom: 8px; }
+        .pricing-card .price { font-size: 36px; font-weight: 300; color: #fff; margin-bottom: 4px; transition: all 0.4s ease; transform-origin: center; }
+        .pricing-card .price span { font-size: 16px; color: #a3c4b3; }
+        .pricing-card .desc { font-size: 14px; color: #a3c4b3; margin-bottom: 24px; line-height: 1.6; }
+        .pricing-card ul { list-style: none; flex: 1; }
+        .pricing-card ul li { padding: 8px 0; font-size: 14px; color: #c5dcd0; border-top: 1px solid rgba(45, 106, 79, 0.2); }
+        .pricing-card ul li::before { content: '✓ '; color: #52b788; }
+        .pricing-card .view-detail {
+            margin-top: 16px; padding: 10px 0;
+            font-size: 13px; color: #52b788; text-align: center;
+            border-top: 1px solid rgba(82, 183, 136, 0.2);
+            transition: all 0.3s;
+        }
+        .pricing-card:hover .view-detail { color: #95d5b2; }
+
+        .steps { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; }
+        .step { text-align: center; padding: 24px 12px; background: rgba(45, 106, 79, 0.08); border-radius: 16px; border: 1px solid rgba(45, 106, 79, 0.15); }
+        .step .step-num { width: 36px; height: 36px; border-radius: 50%; background: #2d6a4f; color: #fff; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; font-size: 14px; font-weight: 700; }
+        .step h4 { font-size: 15px; color: #fff; margin-bottom: 6px; }
+        .step p { font-size: 12px; color: #a3c4b3; }
+
+        .market-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+        .market-grid table { width: 100%; border-collapse: collapse; }
+        .market-grid th, .market-grid td { text-align: left; padding: 12px 0; border-bottom: 1px solid rgba(45, 106, 79, 0.2); font-size: 14px; }
+        .market-grid th { color: #52b788; font-weight: 500; }
+        .market-grid td { color: #c5dcd0; }
+
+        .fin-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+        .fin-card { background: rgba(45, 106, 79, 0.12); border: 1px solid rgba(45, 106, 79, 0.2); border-radius: 16px; padding: 24px; text-align: center; }
+        .fin-card .fin-year { font-size: 13px; color: #52b788; letter-spacing: 2px; margin-bottom: 8px; }
+        .fin-card .fin-rev { font-size: 24px; font-weight: 600; color: #fff; }
+        .fin-card .fin-rev span { font-size: 12px; color: #a3c4b3; font-weight: 400; }
+        .fin-card .fin-margin { font-size: 14px; color: #95d5b2; margin-top: 6px; }
+        .fin-table-wrap { margin-top: 40px; overflow-x: auto; }
+        .fin-table-wrap table { width: 100%; border-collapse: collapse; min-width: 600px; }
+        .fin-table-wrap th { text-align: left; padding: 12px 16px; font-size: 13px; color: #52b788; font-weight: 500; border-bottom: 1px solid #2d6a4f; }
+        .fin-table-wrap td { padding: 12px 16px; font-size: 13px; color: #c5dcd0; border-bottom: 1px solid rgba(45, 106, 79, 0.15); }
+        .fin-table-wrap tr:last-child td { border-bottom: none; font-weight: 600; color: #95d5b2; }
+
+        .team-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px; }
+        .team-card { background: rgba(45, 106, 79, 0.08); border: 1px solid rgba(45, 106, 79, 0.15); border-radius: 16px; padding: 28px 16px; text-align: center; }
+        .team-card .avatar { width: 64px; height: 64px; border-radius: 50%; background: linear-gradient(135deg, #2d6a4f, #52b788); display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; font-size: 22px; font-weight: 700; color: #fff; }
+        .team-card h4 { font-size: 15px; color: #fff; margin-bottom: 2px; }
+        .team-card .title { font-size: 12px; color: #52b788; font-weight: 600; margin-bottom: 4px; }
+        .team-card .role { font-size: 12px; color: #a3c4b3; }
+
+        .contact-section { background: #0a1f15; padding: 80px 40px; max-width: 100%; }
+        .contact-section .inner { max-width: 1200px; margin: 0 auto; text-align: center; }
+        .contact-section h2 { font-weight: 300; margin-bottom: 12px; }
+        .contact-section p { color: #a3c4b3; margin-bottom: 40px; }
+
+        footer { background: #071710; padding: 40px; text-align: center; border-top: 1px solid rgba(45, 106, 79, 0.15); }
+        footer p { font-size: 13px; color: #2d6a4f; }
+        footer .footer-logos { display: flex; justify-content: center; gap: 40px; margin-bottom: 16px; flex-wrap: wrap; }
+        footer .footer-logos span { color: #a3c4b3; font-size: 13px; }
+
+        .swot-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .swot-card { padding: 24px; border-radius: 16px; }
+        .swot-card h4 { font-size: 14px; letter-spacing: 3px; margin-bottom: 12px; }
+        .swot-card ul { list-style: none; }
+        .swot-card ul li { font-size: 13px; padding: 4px 0; color: #c5dcd0; }
+        .swot-s { background: rgba(82, 183, 136, 0.12); border: 1px solid rgba(82, 183, 136, 0.2); }
+        .swot-s h4 { color: #52b788; }
+        .swot-w { background: rgba(204, 119, 34, 0.1); border: 1px solid rgba(204, 119, 34, 0.2); }
+        .swot-w h4 { color: #cc7722; }
+        .swot-o { background: rgba(69, 160, 109, 0.1); border: 1px solid rgba(69, 160, 109, 0.2); }
+        .swot-o h4 { color: #69c490; }
+        .swot-t { background: rgba(180, 60, 60, 0.1); border: 1px solid rgba(180, 60, 60, 0.2); }
+        .swot-t h4 { color: #b44c4c; }
+
+        .fade-in { opacity: 0; transform: translateY(30px); transition: all 0.8s ease; }
+        .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+        .page-enter { opacity: 0; }
+        .page-enter.ready { opacity: 1; }
+
+        /* Modal / detail overlay */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(7, 23, 16, 0.92); backdrop-filter: blur(8px);
+            z-index: 2000; display: none;
+            align-items: center; justify-content: center;
+            padding: 40px; overflow-y: auto;
+        }
+        .modal-overlay.open { display: flex; }
+        .modal-content {
+            max-width: 720px; width: 100%;
+            background: #0f2a1e; border: 1px solid rgba(45, 106, 79, 0.3);
+            border-radius: 24px; padding: 48px 40px;
+            position: relative; animation: modalIn 0.4s ease;
+        }
+        @keyframes modalIn { from { opacity: 0; transform: scale(0.92) translateY(20px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+        .modal-close {
+            position: absolute; top: 20px; right: 24px;
+            font-size: 24px; color: #2d6a4f; cursor: pointer; transition: all 0.3s;
+            background: none; border: none;
+        }
+        .modal-close:hover { color: #52b788; transform: rotate(90deg); }
+        .modal-content .plan-title { font-size: 24px; font-weight: 600; color: #d8f3dc; margin-bottom: 4px; }
+        .modal-content .plan-price { font-size: 40px; font-weight: 300; color: #95d5b2; margin-bottom: 24px; }
+        .modal-content .plan-price span { font-size: 18px; color: #2d6a4f; }
+        .modal-content .plan-desc { color: #a3c4b3; margin-bottom: 28px; line-height: 1.7; }
+        .modal-content .feature-list { list-style: none; }
+        .modal-content .feature-list li { padding: 10px 0; font-size: 15px; color: #c5dcd0; border-bottom: 1px solid rgba(45, 106, 79, 0.12); }
+        .modal-content .feature-list li::before { content: '✓ '; color: #52b788; font-weight: 700; }
+
+        .phone-mockup {
+            margin: 32px 0; padding: 24px;
+            background: rgba(45, 106, 79, 0.1); border-radius: 16px;
+            border: 1px solid rgba(45, 106, 79, 0.2);
+        }
+        .phone-mockup .mock-header { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+        .phone-mockup .mock-header .bar { flex: 1; height: 6px; background: #2d6a4f; border-radius: 3px; }
+        .phone-mockup .mock-header .dot { width: 10px; height: 10px; border-radius: 50%; background: #52b788; }
+        .phone-mockup .mock-screen { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+        .phone-mockup .mock-screen .card {
+            background: rgba(45, 106, 79, 0.15); border-radius: 10px; padding: 14px 10px; text-align: center;
+        }
+        .phone-mockup .mock-screen .card .val { font-size: 16px; font-weight: 700; color: #95d5b2; }
+        .phone-mockup .mock-screen .card .lbl { font-size: 10px; color: #2d6a4f; margin-top: 4px; }
+        .phone-mockup .mock-status {
+            display: flex; justify-content: space-between; margin-top: 16px;
+            padding: 12px 16px; background: rgba(45, 106, 79, 0.1); border-radius: 10px;
+            font-size: 12px; color: #a3c4b3;
+        }
+        .phone-mockup .mock-status .on { color: #52b788; }
+        .phone-mockup .mock-status .off { color: #2d6a4f; }
+
+        @media (max-width: 900px) {
+            .desc-grid, .market-grid { grid-template-columns: 1fr; gap: 30px; }
+            .advantage-grid { grid-template-columns: 1fr 1fr; }
+            .pricing-grid, .fin-grid { grid-template-columns: 1fr 1fr; }
+            .steps { grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+            .team-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+        @media (max-width: 640px) {
+            nav { padding: 0 20px; }
+            nav .nav-links { display: none; }
+            .hamburger { display: flex; }
+            section { padding: 60px 20px; }
+            .hero { padding: 100px 20px 60px; }
+            .advantage-grid, .pricing-grid, .fin-grid { grid-template-columns: 1fr; }
+            .steps { grid-template-columns: 1fr 1fr; }
+            .team-grid { grid-template-columns: 1fr 1fr; }
+            .pricing-card.featured { transform: none; }
+            .modal-content { padding: 32px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="logo"><span>Zhinian</span> Care</div>
+    <div class="nav-links">
+        <a href="#about">About</a>
+        <a href="#advantage">Why Us</a>
+        <a href="#packages">Packages</a>
+        <a href="#process">Process</a>
+        <a href="#market">Market</a>
+        <a href="#finance">Finance</a>
+        <a href="#team">Team</a>
+        <a href="#contact">Contact</a>
+    </div>
+    <div class="hamburger" onclick="document.querySelector('.nav-links').style.display=document.querySelector('.nav-links').style.display==='flex'?'none':'flex';document.querySelector('.nav-links').style.flexDirection='column';document.querySelector('.nav-links').style.position='absolute';document.querySelector('.nav-links').style.top='64px';document.querySelector('.nav-links').style.left='0';document.querySelector('.nav-links').style.width='100%';document.querySelector('.nav-links').style.background='rgba(15,42,30,0.98)';document.querySelector('.nav-links').style.padding='20px';document.querySelector('.nav-links').style.alignItems='center'">
+        <span></span><span></span><span></span>
+    </div>
+</nav>
+
+<section class="hero" id="home">
+    <object class="svg-bg hero-svg" type="image/svg+xml" data="assets/hero-animation.svg">Hero Animation</object>
+    <div class="hero-content">
+        <div class="tagline">One Day. A Safer Home for Your Parents.</div>
+        <h1>Making Old Homes <strong>Safer</strong><br>In Just <strong>One Day</strong></h1>
+        <p class="sub">No renovation permits · No structural work · No disruption to daily life</p>
+        <div class="cta-group">
+            <a href="#packages" class="btn-primary">View Packages</a>
+            <a href="#contact" class="btn-outline">Free Assessment</a>
+        </div>
+    </div>
+    <div class="scroll-indicator">
+        <span>Scroll</span>
+        <div class="arrow"></div>
+    </div>
+</section>
+
+<section id="about">
+    <div class="section-label">About</div>
+    <h2 class="section-title">About <strong>Zhinian Care</strong></h2>
+    <div class="desc-grid fade-in">
+        <div class="text-col">
+            <p>Zhinian Care is a social enterprise focused on home safety retrofitting for ageing-in-place, headquartered in Xiangzhou District, Zhuhai. We provide <a style="color:#52b788;text-decoration:none;border-bottom:1px solid #2d6a4f">one-day, no-major-renovation</a> home safety makeovers — grab bars, anti-slip bathrooms, motion-sensor lighting, SOS alarms, and smart fall detection — so elderly residents can stay safely at home.</p>
+            <p>All work is <b style="color:#d8f3dc">soft-decoration safety improvement</b> only: no structural alterations, no construction permits, and completion within one working day.</p>
+            <p>Pilot operations begin <b style="color:#95d5b2">Q3 2026</b>.</p>
+        </div>
+        <div class="stat-col">
+            <div class="stat-card">
+                <div class="num">~30,000</div>
+                <div class="label">Target households in Xiangzhou</div>
+            </div>
+            <div class="stat-card">
+                <div class="num">1,500</div>
+                <div class="label">5-year cumulative target</div>
+            </div>
+            <div class="stat-card">
+                <div class="num">CNY 500K</div>
+                <div class="label">Founding members' capital</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div style="max-width:100%;padding:0 40px;margin-top:-40px">
+    <object class="svg-section small" type="image/svg+xml" data="assets/funnel-chart.svg">Market Funnel</object>
+</div>
+
+<section id="advantage">
+    <div class="section-label">Why Zhinian Care</div>
+    <h2 class="section-title">Our <strong>Competitive Edge</strong></h2>
+    <p class="section-sub">One-day service, no major renovation, smart monitoring from your phone, and lasting peace of mind.</p>
+    <div class="advantage-grid fade-in">
+        <div class="advantage-card">
+            <div class="icon">☀️</div>
+            <h3>One-Day Service</h3>
+            <p>All safety upgrades completed in a single working day. No long construction, no disruption to your parents' routine.</p>
+        </div>
+        <div class="advantage-card">
+            <div class="icon">🏠</div>
+            <h3>No Major Renovation</h3>
+            <p>Soft-decoration only: grab bars, anti-slip mats, sensor lights, SOS devices, smart monitoring. No structural changes, no permits, no moving out.</p>
+        </div>
+        <div class="advantage-card">
+            <div class="icon">📱</div>
+            <h3>Smart Phone Control</h3>
+            <p>Monitor all devices from your phone. The system learns daily routines — sleep patterns, movement habits, medication timing — and adapts automatically. Get real-time alerts, monthly reports, and full control at your fingertips.</p>
+        </div>
+        <div class="advantage-card">
+            <div class="icon">💚</div>
+            <h3>Peace of Mind</h3>
+            <p>Every installation includes a Family Safety Archive. Optional annual inspections and smart subscriptions turn one-time upgrades into lasting care.</p>
+        </div>
+    </div>
+</section>
+
+<div style="max-width:100%;padding:0 40px;background:rgba(45,106,79,0.03)">
+    <object class="svg-section medium" type="image/svg+xml" data="assets/competitive-map.svg">Competitive Map</object>
+</div>
+
+<section style="padding-top:0">
+    <div class="section-label">SWOT</div>
+    <h2 class="section-title">Strengths · <strong>Opportunities</strong></h2>
+    <div class="swot-grid fade-in">
+        <div class="swot-card swot-s">
+            <h4>✦ STRENGTHS</h4>
+            <ul>
+                <li>End-to-end assessment-installation-after-sales service</li>
+                <li>Community social-worker trust entry</li>
+                <li>Light-asset model: low overhead, fast deployment</li>
+                <li>Permit-free, one-day delivery</li>
+            </ul>
+        </div>
+        <div class="swot-card swot-o">
+            <h4>✦ OPPORTUNITIES</h4>
+            <ul>
+                <li>National ageing-in-place policy tailwind</li>
+                <li>Zhuhai elderly-care facility plan support</li>
+                <li>Adult children's rising willingness to invest in parental safety</li>
+                <li>Mature smart-care technology (millimetre-wave radar, etc.)</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<div style="max-width:100%;padding:40px 40px 0;background:rgba(45,106,79,0.03)">
+    <object class="svg-section" type="image/svg+xml" data="assets/process-flow.svg">Service Process</object>
+</div>
+
+<section id="packages">
+    <div class="section-label">Packages</div>
+    <h2 class="section-title">Service <strong>Plans</strong></h2>
+    <p class="section-sub">Three options for every need. All priced 15–20% below individual product cost. Free in-home assessment with no obligation. <span style="color:#52b788">Hover over a price to enlarge — click any card for full details.</span></p>
+    <div class="pricing-grid fade-in">
+        <div class="pricing-card" onclick="openModal('basic')">
+            <div class="plan-name">Basic</div>
+            <div class="price" id="price-basic">CNY 800<span>–1,500</span></div>
+            <div class="desc">Fall Prevention Pack</div>
+            <ul>
+                <li>Anti-slip mats + grab bar</li>
+                <li>Motion-sensor night lights</li>
+                <li>Corner edge guards</li>
+                <li>Smoke detector</li>
+                <li>Basic Family Safety Archive</li>
+            </ul>
+            <div class="view-detail">Click to view full details →</div>
+        </div>
+        <div class="pricing-card featured" onclick="openModal('wholehome')">
+            <div class="plan-name">Whole-Home</div>
+            <div class="price" id="price-wholehome">CNY 2,500<span>–4,000</span></div>
+            <div class="desc">Peace of Mind Package</div>
+            <ul>
+                <li>Everything in Basic</li>
+                <li>Outlet safety kit</li>
+                <li>Corridor handrail</li>
+                <li>SOS emergency buttons</li>
+                <li>Smart lock + app control</li>
+                <li>Standard Family Safety Archive</li>
+            </ul>
+            <div class="view-detail">Click to view full details →</div>
+        </div>
+        <div class="pricing-card" onclick="openModal('smartcare')">
+            <div class="plan-name">Smart Care</div>
+            <div class="price" id="price-smartcare">CNY 4,500<span>–7,000</span></div>
+            <div class="desc">Smart Monitoring Bundle</div>
+            <ul>
+                <li>Everything in Whole-Home</li>
+                <li>Radar fall detector</li>
+                <li>Sleep monitoring mat</li>
+                <li>Smart medication dispenser</li>
+                <li>Full phone monitoring app</li>
+                <li>Premium Family Safety Archive</li>
+            </ul>
+            <div class="view-detail">Click to view full details →</div>
+        </div>
+    </div>
+    <div style="margin-top:24px;display:flex;gap:40px;justify-content:center;flex-wrap:wrap;text-align:center">
+        <div><span style="color:#52b788;font-size:14px;font-weight:600">Annual Safety Inspection</span><br><span style="color:#a3c4b3;font-size:13px">CNY 199–399 / year</span></div>
+        <div><span style="color:#52b788;font-size:14px;font-weight:600">Smart Monitoring Subscription</span><br><span style="color:#a3c4b3;font-size:13px">CNY 29–59 / month</span></div>
+    </div>
+</section>
+
+<section id="market">
+    <div class="section-label">Market</div>
+    <h2 class="section-title">Market <strong>Insights</strong></h2>
+    <p class="section-sub">Xiangzhou has the highest concentration of pre-2000 communities in Zhuhai. Demand for age-friendly home safety is clear and growing.</p>
+    <div class="market-grid fade-in">
+        <div>
+            <table>
+                <tr><th>Indicator</th><th>Value</th></tr>
+                <tr><td>Zhuhai registered population</td><td>1,618,300</td></tr>
+                <tr><td>Population aged 60+</td><td>241,800</td></tr>
+                <tr><td>Elderly in Xiangzhou</td><td>114,473</td></tr>
+                <tr><td>Old communities in Xiangzhou</td><td>796</td></tr>
+                <tr><td>Yet to be renovated</td><td>400+</td></tr>
+                <tr><td>Target households</td><td>~30,000</td></tr>
+            </table>
+        </div>
+        <div>
+            <h3 style="font-weight:400;color:#d8f3dc;margin-bottom:16px">Penetration Funnel</h3>
+            <div style="background:rgba(45,106,79,0.1);border-radius:16px;padding:24px;border:1px solid rgba(45,106,79,0.2)">
+                <div style="margin-bottom:12px"><span style="color:#52b788;font-weight:600">All elderly households in Xiangzhou</span><br><span style="font-size:24px;color:#fff">~114,000</span></div>
+                <div style="height:1px;background:rgba(45,106,79,0.3);margin:12px 0"></div>
+                <div style="margin-bottom:12px"><span style="color:#52b788;font-weight:600">Living in pre-2000 communities</span><br><span style="font-size:24px;color:#fff">~60,000</span></div>
+                <div style="height:1px;background:rgba(45,106,79,0.3);margin:12px 0"></div>
+                <div style="margin-bottom:12px"><span style="color:#52b788;font-weight:600">In need and willing to retrofit</span><br><span style="font-size:24px;color:#fff">~30,000</span></div>
+                <div style="height:1px;background:rgba(45,106,79,0.3);margin:12px 0"></div>
+                <div><span style="color:#95d5b2;font-weight:600">5-year target (5% penetration)</span><br><span style="font-size:28px;color:#95d5b2">1,500</span></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div style="max-width:100%;padding:0 40px">
+    <object class="svg-section small" type="image/svg+xml" data="assets/revenue-chart.svg">Revenue Chart</object>
+</div>
+
+<section id="finance" style="background:rgba(45,106,79,0.05);max-width:100%;padding:100px 40px">
+    <div style="max-width:1200px;margin:0 auto">
+        <div class="section-label">Financial Plan</div>
+        <h2 class="section-title">Five-Year <strong>Financial Projection</strong></h2>
+        <p class="section-sub">Operating break-even in Year 2, 36.1% net margin by Year 5. Initial investment of CNY 500,000, payback by early 2028.</p>
+        <div class="fin-grid fade-in">
+            <div class="fin-card"><div class="fin-year">2026</div><div class="fin-rev">CNY 225K <span>revenue</span></div><div class="fin-margin">Net margin -3.0%</div></div>
+            <div class="fin-card"><div class="fin-year">2027</div><div class="fin-rev">CNY 750K <span>revenue</span></div><div class="fin-margin">Net margin 16.7%</div></div>
+            <div class="fin-card"><div class="fin-year">2028</div><div class="fin-rev">CNY 2,400K <span>revenue</span></div><div class="fin-margin">Net margin 25.2%</div></div>
+            <div class="fin-card"><div class="fin-year">2030</div><div class="fin-rev">CNY 7,776K <span>revenue</span></div><div class="fin-margin">Net margin 36.1%</div></div>
+        </div>
+        <div class="fin-table-wrap fade-in">
+            <table>
+                <tr><th>Item (CNY '000)</th><th>2026</th><th>2027</th><th>2028</th><th>2029</th><th>2030</th></tr>
+                <tr><td>Revenue</td><td>225.0</td><td>750.0</td><td>2,400.0</td><td>4,320.0</td><td>7,776.0</td></tr>
+                <tr><td>Cost of goods sold</td><td>(96.8)</td><td>(300.0)</td><td>(888.0)</td><td>(1,468.8)</td><td>(2,410.6)</td></tr>
+                <tr><td>Gross profit</td><td>128.3</td><td>450.0</td><td>1,512.0</td><td>2,851.2</td><td>5,365.4</td></tr>
+                <tr><td>Gross margin</td><td>57.0%</td><td>60.0%</td><td>63.0%</td><td>66.0%</td><td>69.0%</td></tr>
+                <tr><td>Operating expenses</td><td>(135.0)</td><td>(283.0)</td><td>(704.1)</td><td>(1,080.3)</td><td>(1,618.6)</td></tr>
+                <tr><td>Profit before tax</td><td>(6.8)</td><td>167.0</td><td>807.9</td><td>1,770.9</td><td>3,746.8</td></tr>
+                <tr><td>Tax (25%)</td><td>0</td><td>(41.8)</td><td>(202.0)</td><td>(442.7)</td><td>(936.7)</td></tr>
+                <tr><td>Net income</td><td>(6.8)</td><td>125.2</td><td>605.9</td><td>1,328.2</td><td>2,810.1</td></tr>
+            </table>
+        </div>
+        <div style="max-width:100%;margin:40px auto 0">
+            <object class="svg-section small" type="image/svg+xml" data="assets/margin-chart.svg">Net Margin Trend</object>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:40px" class="fade-in">
+            <div style="background:rgba(45,106,79,0.1);border-radius:16px;padding:28px;border:1px solid rgba(45,106,79,0.2)">
+                <h4 style="color:#95d5b2;font-weight:500;margin-bottom:12px">Break-Even Analysis</h4>
+                <p style="font-size:14px;color:#c5dcd0">Year 2 operating expenses: CNY 283K at 60% gross margin. Break-even sales: ~CNY 472K (~95 households). Our 2027 target of 150 households (CNY 750K) provides a comfortable buffer.</p>
+            </div>
+            <div style="background:rgba(45,106,79,0.1);border-radius:16px;padding:28px;border:1px solid rgba(45,106,79,0.2)">
+                <h4 style="color:#95d5b2;font-weight:500;margin-bottom:12px">Payback Period</h4>
+                <p style="font-size:14px;color:#c5dcd0">Initial capital: CNY 500K. Closing cash at end of Year 2: CNY 398.5K. With CNY 605.9K net cash inflow in 2028, payback is achieved in <b style="color:#95d5b2">early 2028</b>.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="team">
+    <div class="section-label">Team</div>
+    <h2 class="section-title">Our <strong>Team</strong></h2>
+    <p class="section-sub">Instructor: Ms. Claudia Sau King Chow · BUS 1013 — Semester 2, 2025/2026</p>
+    <div class="team-grid fade-in">
+        <div class="team-card">
+            <div class="avatar">A</div>
+            <h4>吕谱弦</h4>
+            <div class="title">CEO · Andrew</div>
+            <div class="role">Strategic direction, partnerships &amp; investor relations</div>
+        </div>
+        <div class="team-card">
+            <div class="avatar">S</div>
+            <h4>李沛权</h4>
+            <div class="title">CMO · Steven</div>
+            <div class="role">Brand strategy, customer acquisition &amp; go-to-market</div>
+        </div>
+        <div class="team-card">
+            <div class="avatar">M</div>
+            <h4>胡家瑞</h4>
+            <div class="title">CCO · Marco</div>
+            <div class="role">Competitive intelligence, market positioning &amp; strategic planning</div>
+        </div>
+        <div class="team-card">
+            <div class="avatar">G</div>
+            <h4>康雅棋</h4>
+            <div class="title">CFO · Grace</div>
+            <div class="role">Financial planning, budgeting &amp; investor reporting</div>
+        </div>
+        <div class="team-card">
+            <div class="avatar">S</div>
+            <h4>胡馨月</h4>
+            <div class="title">CPO · Sylvia</div>
+            <div class="role">Product design, service innovation &amp; customer experience</div>
+        </div>
+    </div>
+</section>
+
+<section class="contact-section" id="contact">
+    <div class="inner">
+        <div class="section-label">Get in Touch</div>
+        <h2 class="section-title">Give Your Parents <strong>a Safer Home</strong></h2>
+        <p>Xiangzhou District, Zhuhai, Guangdong, China<br>Schedule a free in-home safety assessment today.</p>
+        <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap">
+            <a href="tel:19928876606" class="btn-primary">WeChat Booking: 19928876606</a>
+            <a href="tel:18926974317" class="btn-outline">Phone Inquiry: 18926974317</a>
+        </div>
+        <p style="margin-top:40px;font-size:13px;color:#2d6a4f">One Day. A Safer Home for Your Parents.</p>
+    </div>
+</section>
+
+<footer>
+    <div class="footer-logos">
+        <span>Zhinian Care © 2026</span>
+        <span>Zhuhai · Xiangzhou</span>
+        <span>BUS 1013 — Semester 2, 2025/2026</span>
+    </div>
+    <p>Designed with care for every family.</p>
+</footer>
+
+<!-- Modal Overlay -->
+<div class="modal-overlay" id="modal">
+    <div class="modal-content">
+        <button class="modal-close" onclick="closeModal()">✕</button>
+        <div class="plan-title" id="modal-title"></div>
+        <div class="plan-price" id="modal-price"></div>
+        <div class="plan-desc" id="modal-desc"></div>
+        <ul class="feature-list" id="modal-features"></ul>
+        <div id="modal-phone" style="display:none">
+            <div class="phone-mockup">
+                <div class="mock-header">
+                    <span class="dot"></span>
+                    <span style="font-size:13px;color:#95d5b2;font-weight:600" id="phone-title">Zhinian Care · Smart Monitor</span>
+                    <span class="bar"></span>
+                </div>
+                <div class="mock-screen">
+                    <div class="card">
+                        <div class="val" id="ph-val1">--</div>
+                        <div class="lbl">Fall Risk</div>
+                    </div>
+                    <div class="card">
+                        <div class="val" id="ph-val2">--</div>
+                        <div class="lbl">Bed Status</div>
+                    </div>
+                    <div class="card">
+                        <div class="val" id="ph-val3">--</div>
+                        <div class="lbl">Last SOS</div>
+                    </div>
+                </div>
+                <div class="mock-status">
+                    <span class="on" id="ph-dev1">● Smart Lock: Online</span>
+                    <span class="on" id="ph-dev2">● SOS: Ready</span>
+                    <span class="on" id="ph-dev3">● Radar: Active</span>
+                </div>
+                <div style="margin-top:12px;padding:10px 16px;background:rgba(82,183,136,0.08);border-radius:10px;font-size:12px;color:#a3c4b3;text-align:center">
+                    <span style="color:#52b788">⬤</span> Learning mode active — system adapts to daily routines
+                </div>
+            </div>
+        </div>
+        <div style="margin-top:28px;display:flex;gap:12px;flex-wrap:wrap">
+            <a href="tel:19928876606" class="btn-primary" style="font-size:14px;padding:12px 28px">Book via WeChat: 19928876606</a>
+            <a href="tel:18926974317" class="btn-outline" style="font-size:14px;padding:12px 28px">Call: 18926974317</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    const modalPlans = {
+        basic: {
+            title: 'Basic · Fall Prevention Pack',
+            price: 'CNY 800 – 1,500',
+            desc: 'Essential safety upgrades to prevent falls and accidents in high-risk areas. Perfect entry-level protection for elderly parents living independently.',
+            features: [
+                'Professional in-home safety assessment (free)',
+                'Anti-slip mats for bathroom & kitchen flooring',
+                'Sturdy grab bar installation (bathroom & bedside)',
+                'Motion-sensor LED night lights for dark corridors',
+                'Corner & edge guards on sharp furniture',
+                'Smoke alarm detector',
+                'Basic Family Safety Archive (PDF + WeChat)'
+            ],
+            phone: false
+        },
+        wholehome: {
+            title: 'Whole-Home · Peace of Mind Package',
+            price: 'CNY 2,500 – 4,000',
+            desc: 'Comprehensive whole-home protection. Every room, every risk point addressed. Includes smart lock with app control and SOS emergency system.',
+            features: [
+                'Everything in Basic Fall Prevention Pack',
+                'Complete outlet safety kit with child-safe covers',
+                'Full corridor & stairway handrail system',
+                'SOS emergency buttons (bathroom, bedroom, living room)',
+                'Smart door lock with remote app control',
+                'Real-time door status alerts on your phone',
+                'Standard Family Safety Archive with monthly score updates',
+                'One-year annual inspection included'
+            ],
+            phone: true,
+            phoneData: { title: 'Zhinian Care · Whole-Home', v1: 'Low', v2: 'Normal', v3: 'None', d1: '🔒 Lock: Online', d2: '● SOS: Ready', d3: '● Sensors: Active' }
+        },
+        smartcare: {
+            title: 'Smart Care · Smart Monitoring Bundle',
+            price: 'CNY 4,500 – 7,000',
+            desc: 'The ultimate safety solution. AI-powered fall detection, sleep monitoring, medication reminders, and full smartphone control. Your parents are never alone.',
+            features: [
+                'Everything in Whole-Home Peace of Mind Package',
+                'Millimetre-wave radar fall detector (no camera, privacy-safe)',
+                'Sleep monitoring mat — tracks heart rate, breathing, bed exit',
+                'Smart medication dispenser with app reminders',
+                'Full smartphone monitoring app — real-time dashboard',
+                'AI learns daily routines and alerts you to anomalies',
+                'Monthly health & safety report sent to your phone',
+                'Premium Family Safety Archive with real-time updates',
+                'Priority annual inspection and 24/7 support hotline'
+            ],
+            phone: true,
+            phoneData: { title: 'Zhinian Care · Smart Monitor', v1: 'Low', v2: 'In Bed', v3: '2h ago', d1: '● Lock: Online', d2: '● SOS: Ready', d3: '● Radar: Active' }
+        }
+    };
+
+    function openModal(id) {
+        const data = modalPlans[id];
+        document.getElementById('modal-title').textContent = data.title;
+        document.getElementById('modal-price').innerHTML = data.price + ' <span style="font-size:14px;color:#2d6a4f">· one-time installation</span>';
+        document.getElementById('modal-desc').textContent = data.desc;
+        const fl = document.getElementById('modal-features');
+        fl.innerHTML = '';
+        data.features.forEach(f => { const li = document.createElement('li'); li.textContent = f; fl.appendChild(li); });
+        const phoneSection = document.getElementById('modal-phone');
+        if (data.phone && data.phoneData) {
+            phoneSection.style.display = 'block';
+            document.getElementById('phone-title').textContent = data.phoneData.title;
+            document.getElementById('ph-val1').textContent = data.phoneData.v1;
+            document.getElementById('ph-val2').textContent = data.phoneData.v2;
+            document.getElementById('ph-val3').textContent = data.phoneData.v3;
+        } else {
+            phoneSection.style.display = 'none';
+        }
+        document.getElementById('modal').classList.add('open');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+        document.getElementById('modal').classList.remove('open');
+        document.body.style.overflow = '';
+    }
+
+    document.getElementById('modal').addEventListener('click', function(e) {
+        if (e.target === this) closeModal();
+    });
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') closeModal();
+    });
+
+    // Hover enlarge effect on prices
+    document.querySelectorAll('.pricing-card').forEach(card => {
+        const price = card.querySelector('.price');
+        card.addEventListener('mouseenter', () => {
+            price.style.transform = 'scale(1.25)';
+            price.style.color = '#d8f3dc';
+        });
+        card.addEventListener('mouseleave', () => {
+            price.style.transform = 'scale(1)';
+            price.style.color = '#fff';
+        });
+    });
+
+    // Page entrance animation — reveal elements sequentially
+    document.addEventListener('DOMContentLoaded', () => {
+        const allSections = document.querySelectorAll('section, .svg-section');
+        allSections.forEach((el, i) => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(40px)';
+            el.style.transition = `all 0.8s ease ${i * 0.15}s`;
+            setTimeout(() => {
+                el.style.opacity = '1';
+                el.style.transform = 'translateY(0)';
+            }, 100);
+        });
+        // Hero content
+        const hc = document.querySelector('.hero-content');
+        hc.style.opacity = '0';
+        hc.style.transform = 'translateY(30px)';
+        hc.style.transition = 'all 1.2s ease 0.3s';
+        setTimeout(() => { hc.style.opacity = '1'; hc.style.transform = 'translateY(0)'; }, 100);
+    });
+
+    // Intersection observer for scroll animations
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) entry.target.classList.add('visible');
+        });
+    }, { threshold: 0.15 });
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    // Smooth nav scroll
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+        a.addEventListener('click', e => {
+            e.preventDefault();
+            const t = document.querySelector(a.getAttribute('href'));
+            if (t) t.scrollIntoView({ behavior: 'smooth' });
+        });
+    });
+</script>
+</body>
+</html>

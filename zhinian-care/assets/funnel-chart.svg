@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" fill="none">
+  <defs>
+    <linearGradient id="bg3" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f2a1e"/>
+      <stop offset="100%" stop-color="#1b4332"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="400" fill="url(#bg3)"/>
+
+  <text x="300" y="45" font-family="'Segoe UI','PingFang SC',sans-serif" font-size="16" font-weight="600" fill="#d8f3dc" text-anchor="middle" letter-spacing="2">Market Penetration Funnel</text>
+  <text x="300" y="68" font-family="'Segoe UI','PingFang SC',sans-serif" font-size="11" fill="#2d6a4f" text-anchor="middle">Xiangzhou District · 2026–2030</text>
+
+  <g transform="translate(300,120)">
+    <path d="M-160 0 L160 0 L140 35 L-140 35Z" fill="#1b4332" stroke="#2d6a4f" stroke-width="1">
+      <animate attributeName="opacity" from="0" to="1" dur="0.8s" fill="freeze"/>
+    </path>
+    <text x="0" y="22" font-family="monospace" font-size="13" font-weight="600" fill="#95d5b2" text-anchor="middle">≈ 114,000</text>
+    <text x="0" y="-8" font-family="'Segoe UI',sans-serif" font-size="11" fill="#2d6a4f" text-anchor="middle">Elderly households in Xiangzhou</text>
+
+    <path d="M-140 45 L140 45 L120 80 L-120 80Z" fill="#1b4332" stroke="#2d6a4f" stroke-width="1" opacity="0">
+      <animate attributeName="opacity" from="0" to="1" dur="0.8s" begin="0.6s" fill="freeze"/>
+    </path>
+    <text x="0" y="67" font-family="monospace" font-size="12" font-weight="600" fill="#95d5b2" text-anchor="middle" opacity="0">≈ 60,000
+      <animate attributeName="opacity" from="0" to="1" dur="0.8s" begin="1s" fill="freeze"/>
+    </text>
+    <text x="0" y="55" font-family="'Segoe UI',sans-serif" font-size="10" fill="#2d6a4f" text-anchor="middle" opacity="0">Living in pre-2000 communities
+      <animate attributeName="opacity" from="0" to="1" dur="0.8s" begin="1s" fill="freeze"/>
+    </text>
+
+    <path d="M-120 90 L120 90 L100 130 L-100 130Z" fill="#1b4332" stroke="#2d6a4f" stroke-width="1" opacity="0">
+      <animate attributeName="opacity" from="0" to="1" dur="0.8s" begin="1.2s" fill="freeze"/>
+    </path>
+    <text x="0" y="117" font-family="monospace" font-size="12" font-weight="600" fill="#95d5b2" text-anchor="middle" opacity="0">≈ 30,000
+      <animate attributeName="opacity" from="0" to="1" dur="0.8s" begin="1.6s" fill="freeze"/>
+    </text>
+    <text x="0" y="105" font-family="'Segoe UI',sans-serif" font-size="10" fill="#2d6a4f" text-anchor="middle" opacity="0">In need &amp; willing to retrofit
+      <animate attributeName="opacity" from="0" to="1" dur="0.8s" begin="1.6s" fill="freeze"/>
+    </text>
+
+    <path d="M0 135 L0 155" stroke="#52b788" stroke-width="1.5" stroke-dasharray="4 3" opacity="0">
+      <animate attributeName="opacity" from="0" to="0.6" dur="0.5s" begin="2s" fill="freeze"/>
+    </path>
+
+    <ellipse cx="0" cy="182" rx="70" ry="28" fill="#2d6a4f" stroke="#52b788" stroke-width="1.5" opacity="0">
+      <animate attributeName="opacity" from="0" to="1" dur="0.8s" begin="2.2s" fill="freeze"/>
+    </ellipse>
+    <text x="0" y="179" font-family="monospace" font-size="16" font-weight="700" fill="#d8f3dc" text-anchor="middle" opacity="0">1,500
+      <animate attributeName="opacity" from="0" to="1" dur="0.8s" begin="2.8s" fill="freeze"/>
+    </text>
+    <text x="0" y="196" font-family="'Segoe UI',sans-serif" font-size="10" fill="#52b788" text-anchor="middle" opacity="0">5-year target · 5% penetration
+      <animate attributeName="opacity" from="0" to="1" dur="0.8s" begin="2.8s" fill="freeze"/>
+    </text>
+
+    <ellipse cx="0" cy="182" rx="70" ry="28" fill="none" stroke="#95d5b2" stroke-width="2" opacity="0">
+      <animate attributeName="opacity" values="0;0.5;0" dur="2s" begin="3s" repeatCount="indefinite"/>
+    </ellipse>
+  </g>
+
+  <g font-family="monospace" font-size="9" fill="#2d6a4f">
+    <text x="470" y="142" opacity="0">≈53% retained
+      <animate attributeName="opacity" values="0;0.6" dur="0.8s" begin="1.5s" fill="freeze"/>
+    </text>
+    <text x="470" y="178" opacity="0">≈50% qualified
+      <animate attributeName="opacity" values="0;0.6" dur="0.8s" begin="2s" fill="freeze"/>
+    </text>
+  </g>
+</svg>

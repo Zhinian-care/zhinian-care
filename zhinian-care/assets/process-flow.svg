@@ -1,0 +1,109 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 300" fill="none">
+  <defs>
+    <linearGradient id="bg4" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#0f2a1e"/>
+      <stop offset="100%" stop-color="#1b4332"/>
+    </linearGradient>
+    <filter id="sg"><feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#52b788" flood-opacity="0.15"/></filter>
+  </defs>
+  <rect width="800" height="300" fill="url(#bg4)"/>
+
+  <text x="400" y="40" font-family="'Segoe UI','PingFang SC',sans-serif" font-size="16" font-weight="600" fill="#d8f3dc" text-anchor="middle" letter-spacing="2">Service Delivery Process</text>
+
+  <g transform="translate(0,40)">
+    <!-- Step 1 -->
+    <g transform="translate(40,50)" filter="url(#sg)">
+      <circle cx="30" cy="30" r="30" fill="#1b4332" stroke="#2d6a4f" stroke-width="1.5">
+        <animate attributeName="stroke" values="#2d6a4f;#52b788;#2d6a4f" dur="3s" repeatCount="indefinite"/>
+      </circle>
+      <text x="30" y="35" font-family="monospace" font-size="16" font-weight="700" fill="#52b788" text-anchor="middle">01</text>
+      <text x="30" y="82" font-family="'Segoe UI',sans-serif" font-size="12" fill="#d8f3dc" text-anchor="middle" font-weight="600">Book Online</text>
+      <text x="30" y="100" font-family="'Segoe UI',sans-serif" font-size="10" fill="#2d6a4f" text-anchor="middle">WeChat / Phone</text>
+    </g>
+
+    <!-- Arrow 1 -->
+    <g transform="translate(140,65)">
+      <path d="M0 15 L40 15" stroke="#2d6a4f" stroke-width="1.5" stroke-dasharray="4 3">
+        <animate attributeName="stroke-dashoffset" from="0" to="20" dur="1s" repeatCount="indefinite"/>
+      </path>
+      <polygon points="40,10 48,15 40,20" fill="#2d6a4f"/>
+    </g>
+
+    <!-- Step 2 -->
+    <g transform="translate(190,50)" filter="url(#sg)">
+      <circle cx="30" cy="30" r="30" fill="#1b4332" stroke="#2d6a4f" stroke-width="1.5">
+        <animate attributeName="stroke" values="#2d6a4f;#52b788;#2d6a4f" dur="3s" begin="1s" repeatCount="indefinite"/>
+      </circle>
+      <text x="30" y="35" font-family="monospace" font-size="16" font-weight="700" fill="#52b788" text-anchor="middle">02</text>
+      <text x="30" y="82" font-family="'Segoe UI',sans-serif" font-size="12" fill="#d8f3dc" text-anchor="middle" font-weight="600">Free Assessment</text>
+      <text x="30" y="100" font-family="'Segoe UI',sans-serif" font-size="10" fill="#2d6a4f" text-anchor="middle">In-home safety check</text>
+    </g>
+
+    <!-- Arrow 2 -->
+    <g transform="translate(290,65)">
+      <path d="M0 15 L40 15" stroke="#2d6a4f" stroke-width="1.5" stroke-dasharray="4 3">
+        <animate attributeName="stroke-dashoffset" from="0" to="20" dur="1s" begin="1s" repeatCount="indefinite"/>
+      </path>
+      <polygon points="40,10 48,15 40,20" fill="#2d6a4f"/>
+    </g>
+
+    <!-- Step 3 -->
+    <g transform="translate(340,50)" filter="url(#sg)">
+      <circle cx="30" cy="30" r="30" fill="#1b4332" stroke="#52b788" stroke-width="2">
+        <animate attributeName="stroke" values="#2d6a4f;#52b788;#2d6a4f" dur="3s" begin="2s" repeatCount="indefinite"/>
+      </circle>
+      <text x="30" y="35" font-family="monospace" font-size="16" font-weight="700" fill="#52b788" text-anchor="middle">03</text>
+      <text x="30" y="82" font-family="'Segoe UI',sans-serif" font-size="12" fill="#d8f3dc" text-anchor="middle" font-weight="600">Select Plan</text>
+      <text x="30" y="100" font-family="'Segoe UI',sans-serif" font-size="10" fill="#2d6a4f" text-anchor="middle">Quote confirmation</text>
+    </g>
+
+    <!-- Arrow 3 -->
+    <g transform="translate(440,65)">
+      <path d="M0 15 L40 15" stroke="#2d6a4f" stroke-width="1.5" stroke-dasharray="4 3">
+        <animate attributeName="stroke-dashoffset" from="0" to="20" dur="1s" begin="2s" repeatCount="indefinite"/>
+      </path>
+      <polygon points="40,10 48,15 40,20" fill="#2d6a4f"/>
+    </g>
+
+    <!-- Step 4 -->
+    <g transform="translate(490,50)" filter="url(#sg)">
+      <circle cx="30" cy="30" r="30" fill="#2d6a4f" stroke="#52b788" stroke-width="2">
+        <animate attributeName="stroke" values="#2d6a4f;#95d5b2;#2d6a4f" dur="3s" begin="3s" repeatCount="indefinite"/>
+      </circle>
+      <text x="30" y="35" font-family="monospace" font-size="16" font-weight="700" fill="#d8f3dc" text-anchor="middle">04</text>
+      <text x="30" y="82" font-family="'Segoe UI',sans-serif" font-size="12" fill="#d8f3dc" text-anchor="middle" font-weight="600">One-Day Install</text>
+      <text x="30" y="100" font-family="'Segoe UI',sans-serif" font-size="10" fill="#2d6a4f" text-anchor="middle">Professional team</text>
+    </g>
+
+    <!-- Arrow 4 -->
+    <g transform="translate(590,65)">
+      <path d="M0 15 L40 15" stroke="#2d6a4f" stroke-width="1.5" stroke-dasharray="4 3">
+        <animate attributeName="stroke-dashoffset" from="0" to="20" dur="1s" begin="3s" repeatCount="indefinite"/>
+      </path>
+      <polygon points="40,10 48,15 40,20" fill="#2d6a4f"/>
+    </g>
+
+    <!-- Step 5 -->
+    <g transform="translate(640,50)" filter="url(#sg)">
+      <circle cx="30" cy="30" r="30" fill="#2d6a4f" stroke="#95d5b2" stroke-width="2">
+        <animate attributeName="stroke" values="#2d6a4f;#95d5b2;#2d6a4f" dur="3s" begin="4s" repeatCount="indefinite"/>
+      </circle>
+      <text x="30" y="35" font-family="monospace" font-size="16" font-weight="700" fill="#d8f3dc" text-anchor="middle">05</text>
+      <text x="30" y="82" font-family="'Segoe UI',sans-serif" font-size="12" fill="#d8f3dc" text-anchor="middle" font-weight="600">Ongoing Care</text>
+      <text x="30" y="100" font-family="'Segoe UI',sans-serif" font-size="10" fill="#2d6a4f" text-anchor="middle">Archive + inspection</text>
+    </g>
+  </g>
+
+  <!-- Timeline bar -->
+  <g transform="translate(70,220)">
+    <rect x="0" y="0" width="660" height="4" rx="2" fill="#1b4332"/>
+    <rect x="0" y="0" width="0" height="4" rx="2" fill="url(#sg)">
+      <animate attributeName="width" from="0" to="660" dur="5s" fill="freeze"/>
+    </rect>
+    <text x="0" y="24" font-family="monospace" font-size="9" fill="#2d6a4f">Day -7</text>
+    <text x="165" y="24" font-family="monospace" font-size="9" fill="#2d6a4f">Day -3</text>
+    <text x="330" y="24" font-family="monospace" font-size="9" fill="#2d6a4f">Day 0</text>
+    <text x="495" y="24" font-family="monospace" font-size="9" fill="#2d6a4f">1 Day Later</text>
+    <text x="640" y="24" font-family="monospace" font-size="9" fill="#2d6a4f">Ongoing</text>
+  </g>
+</svg>

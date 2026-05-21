@@ -1,0 +1,126 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" fill="none">
+  <defs>
+    <radialGradient id="g1" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#2d6a4f" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#0f2a1e" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="bar" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#52b788"/>
+      <stop offset="100%" stop-color="#2d6a4f"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <rect width="800" height="600" fill="#0f2a1e"/>
+
+  <!-- Ambient glow -->
+  <circle cx="400" cy="300" r="280" fill="url(#g1)"/>
+
+  <!-- Floating particles -->
+  <g opacity="0.3">
+    <circle cx="120" cy="150" r="2" fill="#52b788"><animate attributeName="cy" values="150;130;150" dur="4s" repeatCount="indefinite"/></circle>
+    <circle cx="680" cy="200" r="1.5" fill="#95d5b2"><animate attributeName="cy" values="200;180;200" dur="3.5s" repeatCount="indefinite"/></circle>
+    <circle cx="200" cy="450" r="2" fill="#52b788"><animate attributeName="cy" values="450;430;450" dur="5s" repeatCount="indefinite"/></circle>
+    <circle cx="600" cy="100" r="1.5" fill="#95d5b2"><animate attributeName="cy" values="100;85;100" dur="3s" repeatCount="indefinite"/></circle>
+    <circle cx="700" cy="400" r="2" fill="#52b788"><animate attributeName="cy" values="400;385;400" dur="4.5s" repeatCount="indefinite"/></circle>
+  </g>
+
+  <!-- House structure - animated build -->
+  <g transform="translate(200,120)">
+    <g>
+      <!-- Walls -->
+      <rect x="0" y="60" width="400" height="280" rx="4" fill="#1b4332" stroke="#2d6a4f" stroke-width="1.5">
+        <animate attributeName="opacity" from="0" to="1" dur="1.5s" fill="freeze"/>
+      </rect>
+      <!-- Roof -->
+      <path d="M-30 60 L200 -10 L430 60Z" fill="#2d6a4f" stroke="#52b788" stroke-width="1.5" stroke-linejoin="round">
+        <animate attributeName="opacity" from="0" to="1" dur="1s" fill="freeze"/>
+      </path>
+      <!-- Window left -->
+      <rect x="40" y="110" width="90" height="120" rx="8" fill="#0a1f15" stroke="#3d7a5e" stroke-width="1.2"/>
+      <line x1="85" y1="110" x2="85" y2="230" stroke="#3d7a5e" stroke-width="1"/>
+      <line x1="40" y1="170" x2="130" y2="170" stroke="#3d7a5e" stroke-width="1"/>
+      <!-- Window glow -->
+      <rect x="44" y="114" width="40" height="52" rx="4" fill="#f0d78c" opacity="0">
+        <animate attributeName="opacity" values="0;0.15;0.08;0.12;0" dur="6s" repeatCount="indefinite"/>
+      </rect>
+      <!-- Window right -->
+      <rect x="270" y="110" width="90" height="120" rx="8" fill="#0a1f15" stroke="#3d7a5e" stroke-width="1.2"/>
+      <line x1="315" y1="110" x2="315" y2="230" stroke="#3d7a5e" stroke-width="1"/>
+      <line x1="270" y1="170" x2="360" y2="170" stroke="#3d7a5e" stroke-width="1"/>
+      <rect x="274" y="114" width="40" height="52" rx="4" fill="#f0d78c" opacity="0">
+        <animate attributeName="opacity" values="0;0.12;0.06;0.1;0" dur="7s" repeatCount="indefinite"/>
+      </rect>
+      <!-- Door -->
+      <rect x="155" y="180" width="90" height="160" rx="6" fill="#0a1f15" stroke="#52b788" stroke-width="1.2"/>
+      <circle cx="230" cy="265" r="4" fill="#52b788"/>
+    </g>
+  </g>
+
+  <!-- Grab bar animated left -->
+  <g transform="translate(180,340)">
+    <rect x="0" y="2" width="60" height="6" rx="3" fill="#95d5b2" opacity="0">
+      <animate attributeName="opacity" from="0" to="1" dur="0.8s" begin="2s" fill="freeze"/>
+    </rect>
+  </g>
+
+  <!-- Anti-slip marks on floor -->
+  <g transform="translate(220,470)" opacity="0">
+    <animate attributeName="opacity" from="0" to="0.6" dur="1s" begin="2.5s" fill="freeze"/>
+    <line x1="0" y1="0" x2="30" y2="0" stroke="#52b788" stroke-width="2" stroke-dasharray="4 4"/>
+    <line x1="0" y1="8" x2="25" y2="8" stroke="#52b788" stroke-width="2" stroke-dasharray="4 4"/>
+    <line x1="0" y1="16" x2="35" y2="16" stroke="#52b788" stroke-width="2" stroke-dasharray="4 4"/>
+  </g>
+
+  <!-- Sensor light beam -->
+  <g transform="translate(400,130)" opacity="0">
+    <animate attributeName="opacity" values="0;0.3;0.1;0.25;0" dur="4s" repeatCount="indefinite"/>
+    <path d="M0 0 L-40 80 L40 80Z" fill="#f0d78c" opacity="0.15"/>
+  </g>
+
+  <!-- SOS icon - pulsing -->
+  <g transform="translate(580,380)">
+    <circle cx="0" cy="0" r="18" fill="none" stroke="#cc7722" stroke-width="2" opacity="0">
+      <animate attributeName="r" values="18;28" dur="2s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.4;0" dur="2s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="0" cy="0" r="12" fill="#cc7722" opacity="0.8"/>
+    <text x="0" y="5" font-family="monospace" font-size="10" font-weight="700" fill="#0f2a1e" text-anchor="middle">SOS</text>
+  </g>
+
+  <!-- Radar wave icon -->
+  <g transform="translate(620,150)">
+    <circle cx="0" cy="0" r="20" fill="none" stroke="#52b788" stroke-width="1.5" opacity="0.3" stroke-dasharray="4 4">
+      <animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="3s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="0" cy="0" r="8" fill="#52b788" opacity="0.6"/>
+    <path d="M0 -3 L4 5 L-4 5Z" fill="#52b788">
+      <animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="3s" repeatCount="indefinite"/>
+    </path>
+  </g>
+
+  <!-- Hand holding house icon bottom-right -->
+  <g transform="translate(100,420)" opacity="0">
+    <animate attributeName="opacity" from="0" to="1" dur="1s" begin="3s" fill="freeze"/>
+    <path d="M20 80 C15 60 25 40 40 35 C50 32 55 38 58 45 C60 40 68 35 78 38 C88 42 90 55 85 65 C92 60 100 62 100 75 C100 85 92 90 80 90 L25 90 C15 90 10 85 20 80Z" fill="#52b788" opacity="0.8"/>
+    <path d="M55 45 C55 45 60 55 58 70" stroke="#2d6a4f" stroke-width="1.5" fill="none"/>
+  </g>
+
+  <!-- Connective lines - signal/network -->
+  <g opacity="0.15">
+    <line x1="400" y1="400" x2="580" y2="380" stroke="#52b788" stroke-width="1" stroke-dasharray="5 5">
+      <animate attributeName="opacity" values="0.1;0.3;0.1" dur="3s" repeatCount="indefinite"/>
+    </line>
+    <line x1="400" y1="400" x2="620" y2="150" stroke="#52b788" stroke-width="1" stroke-dasharray="5 5">
+      <animate attributeName="opacity" values="0.1;0.3;0.1" dur="3.5s" repeatCount="indefinite"/>
+    </line>
+  </g>
+
+  <!-- Tagline -->
+  <text x="400" y="560" font-family="'PingFang SC','Microsoft YaHei',sans-serif" font-size="14" fill="#2d6a4f" text-anchor="middle" letter-spacing="4" opacity="0">
+    One Day. A Safer Home for Your Parents.
+    <animate attributeName="opacity" from="0" to="0.6" dur="1.5s" begin="3.5s" fill="freeze"/>
+  </text>
+</svg>

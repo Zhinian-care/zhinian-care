@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" fill="none">
+  <defs>
+    <linearGradient id="bg5" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f2a1e"/>
+      <stop offset="100%" stop-color="#1b4332"/>
+    </linearGradient>
+    <linearGradient id="posG" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#52b788"/>
+      <stop offset="100%" stop-color="#95d5b2"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="400" fill="url(#bg5)"/>
+
+  <text x="300" y="45" font-family="'PingFang SC','Microsoft YaHei',sans-serif" font-size="16" font-weight="600" fill="#d8f3dc" text-anchor="middle" letter-spacing="2">Competitive Positioning Map</text>
+
+  <!-- Axes -->
+  <g transform="translate(300,220)">
+    <!-- Y axis -->
+    <line x1="-220" y1="120" x2="-220" y2="-120" stroke="#1b4332" stroke-width="1"/>
+    <polygon points="-220,-125 -225,-115 -215,-115" fill="#1b4332"/>
+    <!-- X axis -->
+    <line x1="-220" y1="120" x2="220" y2="120" stroke="#1b4332" stroke-width="1"/>
+    <polygon points="225,120 215,115 215,125" fill="#1b4332"/>
+
+    <!-- Axis labels -->
+    <text x="-220" y="-135" font-family="'PingFang SC',sans-serif" font-size="9" fill="#2d6a4f" text-anchor="middle">Elderly-Safety Specialisation</text>
+    <text x="230" y="124" font-family="'PingFang SC',sans-serif" font-size="9" fill="#2d6a4f">Service Completeness</text>
+
+    <!-- Arrow labels -->
+    <text x="-210" y="-110" font-family="monospace" font-size="8" fill="#2d6a4f">Low</text>
+    <text x="-210" y="135" font-family="monospace" font-size="8" fill="#2d6a4f">High</text>
+    <text x="-200" y="144" font-family="monospace" font-size="8" fill="#2d6a4f">Low</text>
+    <text x="200" y="144" font-family="monospace" font-size="8" fill="#2d6a4f">High</text>
+
+    <!-- Quadrant labels faint -->
+    <text x="-100" y="-50" font-family="monospace" font-size="8" fill="#1b4332">Niche</text>
+    <text x="80" y="-50" font-family="monospace" font-size="8" fill="#1b4332">Specialist Leader</text>
+    <text x="-100" y="80" font-family="monospace" font-size="8" fill="#1b4332">Commodity</text>
+    <text x="80" y="80" font-family="monospace" font-size="8" fill="#1b4332">Generalist</text>
+
+    <!-- Grid lines -->
+    <line x1="-220" y1="0" x2="220" y2="0" stroke="#1b4332" stroke-width="0.5" stroke-dasharray="3 3"/>
+    <line x1="0" y1="120" x2="0" y2="-120" stroke="#1b4332" stroke-width="0.5" stroke-dasharray="3 3"/>
+
+    <!-- Zhinian Care - top right (specialist leader) -->
+    <g>
+      <circle cx="130" cy="-80" r="20" fill="#52b788" stroke="#95d5b2" stroke-width="2" opacity="0.9">
+        <animate attributeName="r" values="20;24;20" dur="3s" repeatCount="indefinite"/>
+      </circle>
+      <text x="130" y="-75" font-family="monospace" font-size="8" font-weight="700" fill="#0f2a1e" text-anchor="middle">ZC</text>
+      <text x="130" y="-55" font-family="'PingFang SC',sans-serif" font-size="9" font-weight="700" fill="#95d5b2" text-anchor="middle">至念 Care</text>
+    </g>
+
+    <!-- Zhengyuan -->
+    <circle cx="60" cy="-40" r="14" fill="#2d6a4f" opacity="0.6"/>
+    <text x="60" y="-35" font-family="monospace" font-size="7" font-weight="600" fill="#d8f3dc" text-anchor="middle">ZY</text>
+    <text x="60" y="-17" font-family="'PingFang SC',sans-serif" font-size="8" fill="#2d6a4f" text-anchor="middle">正圆</text>
+
+    <!-- Fushoukang -->
+    <circle cx="-30" cy="-60" r="14" fill="#2d6a4f" opacity="0.5"/>
+    <text x="-30" y="-55" font-family="monospace" font-size="7" font-weight="600" fill="#d8f3dc" text-anchor="middle">FS</text>
+    <text x="-30" y="-37" font-family="'PingFang SC',sans-serif" font-size="8" fill="#2d6a4f" text-anchor="middle">福寿康</text>
+
+    <!-- Ankangtong -->
+    <circle cx="-80" cy="-30" r="14" fill="#2d6a4f" opacity="0.5"/>
+    <text x="-80" y="-25" font-family="monospace" font-size="7" font-weight="600" fill="#d8f3dc" text-anchor="middle">AK</text>
+    <text x="-80" y="-7" font-family="'PingFang SC',sans-serif" font-size="8" fill="#2d6a4f" text-anchor="middle">安康通</text>
+
+    <!-- Poly Heping -->
+    <circle cx="-100" cy="30" r="14" fill="#2d6a4f" opacity="0.4"/>
+    <text x="-100" y="35" font-family="monospace" font-size="7" font-weight="600" fill="#d8f3dc" text-anchor="middle">PH</text>
+    <text x="-100" y="53" font-family="'PingFang SC',sans-serif" font-size="8" fill="#2d6a4f" text-anchor="middle">保利和品</text>
+
+    <!-- E-commerce / DIY -->
+    <circle cx="-150" y="70" r="12" fill="#2d6a4f" opacity="0.3"/>
+    <text x="-150" y="74" font-family="monospace" font-size="6" font-weight="600" fill="#d8f3dc" text-anchor="middle">EC</text>
+    <text x="-150" y="90" font-family="monospace" font-size="7" fill="#2d6a4f" text-anchor="middle">电商/DIY</text>
+
+    <!-- Meituan/Dianping -->
+    <circle cx="30" y="80" r="12" fill="#2d6a4f" opacity="0.3"/>
+    <text x="30" y="84" font-family="monospace" font-size="6" font-weight="600" fill="#d8f3dc" text-anchor="middle">MT</text>
+    <text x="30" y="100" font-family="monospace" font-size="7" fill="#2d6a4f" text-anchor="middle">美团/点评</text>
+
+    <!-- Arrow pointing to Zhinian Care -->
+    <path d="M130 -80 L160 -110" stroke="#95d5b2" stroke-width="1" stroke-dasharray="3 3" opacity="0.5">
+      <animate attributeName="opacity" values="0.3;0.7;0.3" dur="2s" repeatCount="indefinite"/>
+    </path>
+  </g>
+</svg>
